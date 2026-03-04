@@ -1,0 +1,109 @@
+<div class="particle-bg"></div>
+
+<div class="form-container">
+  <!-- Header -->
+  <div class="form-header">
+    <h2 class="form-title">
+      {{ blogId ? '✏ Edit Blog' : '📝 Create Blog' }}
+    </h2>
+    <button class="back-btn" routerLink="/">← Back</button>
+  </div>
+
+  <!-- Loading -->
+  <div *ngIf="isLoading" class="loading-overlay">
+    <div class="spinner"></div>
+    <p>{{ blogId ? 'Loading blog...' : 'Creating new blog...' }}</p>
+  </div>
+
+  <!-- Form -->
+  <form *ngIf="!isLoading" [formGroup]="blogForm" (ngSubmit)="save()" class="blog-form" novalidate>
+    
+    <!-- Title Section -->
+    <div class="form-group">
+      <label class="form-label">Blog Title <span class="required">*</span></label>
+      <div class="title-input-group">
+        <input 
+          formControlName="title"
+          class="form-input title-input"
+          placeholder="Enter an awesome blog title..."
+          (keydown)="onTitleKeydown($event)"
+          [class.error]="f.title.touched && f.title.invalid">
+        
+        <!-- AI Title Buttons -->
+        <div class="title-suggestions">
+          <button type="button" class="suggestion-btn chatgpt" (click)="setTitleSuggestion('chatgpt')" title="ChatGPT Title">
+            🤖 ChatGPT
+          </button>
+          <button type="button" class="suggestion-btn youtube" (click)="setTitleSuggestion('youtube')" title="YouTube Title">
+            ▶ YouTube
+          </button>
+          <button type="button" class="suggestion-btn instagram" (click)="setTitleSuggestion('instagram')" title="Instagram Title">
+            📱 Instagram
+          </button>
+          <button type="button" class="suggestion-btn link" (click)="setTitleSuggestion('link')" title="Link Title">
+            🔗 Link
+          </button>
+        </div>
+      </div>
+      
+      <!-- Title Error -->
+      <div *ngIf="f.title.touched && f.title.errors" class="error-message">
+        <span *ngIf="f.title.errors?.['required']">Title is required</span>
+        <span *ngIf="f.title.errors?.['minlength']">Title must be at least 5 characters</span>
+      </div>
+    </div>
+
+    <!-- Content -->
+    <div class="form-group" *ngIf="contentView">
+      <label class="form-label">Content <span class="required">*</span></label>
+      <textarea 
+        formControlName="content"
+        class="form-input content-input"
+        placeholder="Write your amazing content here... Support HTML, Markdown, code blocks, etc."
+        rows="10"
+        [class.error]="f.content.touched && f.content.invalid"></textarea>
+      <div *ngIf="f.content.touched && f.content.errors?.['required']" class="error-message">
+        Content is required
+      </div>
+    </div>
+
+    <!-- YouTube Link -->
+    <div class="form-group" *ngIf="youtubeView">
+      <label class="form-label">YouTube Video (Optional)</label>
+      <div class="input-with-icon">
+        <input 
+          formControlName="youtubeLink"
+          class="form-input"
+          placeholder="https://youtube.com/watch?v=..."
+          [class.valid]="f.youtubeLink.value && isValidYouTubeUrl(f.youtubeLink.value)">
+        <span class="input-icon">▶</span>
+      </div>
+      <small class="help-text">Paste any YouTube URL - it will auto-embed!</small>
+    </div>
+
+    <!-- Instagram Link -->
+    <div class="form-group" *ngIf="instagramView || linkView">
+      <label class="form-label">Instagram Post/Reel (Optional)</label>
+      <div class="input-with-icon">
+        <input 
+          formControlName="instagramLink"
+          class="form-input"
+          placeholder="https://instagram.com/reel/..."
+          [class.valid]="f.instagramLink.value && isValidInstagramUrl(f.instagramLink.value)">
+        <span class="input-icon">📱</span>
+      </div>
+      <small class="help-text">Instagram posts and reels auto-embed perfectly!</small>
+    </div>
+
+    <!-- Actions -->
+    <div class="form-actions">
+      <button type="button" class="cancel-btn" routerLink="/blogs">Cancel</button>
+      <button 
+        type="submit" 
+        class="save-btn"
+        [disabled]="isLoading || blogForm.invalid">
+        {{ blogId ? '✏ Update Blog' : '🚀 Publish Blog' }}
+      </button>
+    </div>
+  </form>
+</div>

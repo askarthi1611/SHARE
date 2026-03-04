@@ -1,0 +1,99 @@
+<div class="particle-bg"></div>
+
+<div class="app-container">
+    <div class="header-section">
+        <h2 class="page-title">Blog Dashboard</h2>
+        <button class="create-btn" routerLink="/blog/create">
+            + Create Blog
+        </button>
+    </div>
+
+    <!-- Skeleton Loader -->
+    <div *ngIf="isLoading" class="skeleton-grid">
+        <div class="skeleton-card" *ngFor="let i of [1,2,3,4,5]"></div>
+    </div>
+
+    <!-- Blog Grid -->
+    <div class="blog-grid" *ngIf="!isLoading">
+        <div class="blog-card reveal show" #cardRef *ngFor="let blog of blogs; trackBy: trackByBlogId">
+
+            <!-- View Blog Button -->
+            <button class="view-btn" [routerLink]="['/blog', blog._id]">
+                🪟 View
+            </button>
+
+            <!-- YouTube Video -->
+            <div *ngIf="blog.youtubeLink" class="media-container" (click)="togglePlay(blog)">
+                <div *ngIf="!blog.isPlaying" class="thumbnail-wrapper">
+                    <img [src]="blog.thumbnail" [alt]="blog.title" class="thumbnail" loading="lazy" />
+                    <div class="play-overlay">
+                        <span class="play-icon">▶</span>
+                        <span class="play-label">Play Video</span>
+                    </div>
+                </div>
+                <div class="responsive-embed" *ngIf="blog.isPlaying">
+                    <iframe [src]="blog.embedUrl" frameborder="0" allowfullscreen loading="lazy"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        referrerpolicy="strict-origin-when-cross-origin">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Instagram Embed -->
+            <div *ngIf="blog.instagramLink" class="instagram-section">
+                <div class="ig-header">
+                    <a [href]="blog.instagramLink" target="_blank" class="ig-link" rel="noopener">
+                        📱 View on Instagram
+                    </a>
+                </div>
+                <div class="responsive-embed ig-aspect">
+                    <iframe [src]="blog.instagramEmbedUrl" frameborder="0" scrolling="no" allowfullscreen="true"
+                        loading="lazy">
+                    </iframe>
+                </div>
+            </div>
+
+            <!-- Blog Content -->
+            <div class="blog-content" *ngIf="blog.title || blog.content">
+                <h3 class="blog-title" *ngIf="blog.title">{{ blog.title }}</h3>
+
+                <div class="content-preview" *ngIf="blog.content">
+                    <!-- <div class="content-html" [innerHTML]="safeHtml(blog.content) + '...'"></div> -->
+                    <pre class="content-html" [innerText]="safeHtml(blog.content)"></pre>
+
+                    <a [routerLink]="['/blog', blog._id]" class="read-more">Read More →</a>
+                </div>
+            </div>
+
+            <!-- Stats & Actions -->
+            <div class="card-footer">
+                <div class="stats">
+                    <button class="like-btn" (click)="toggleLike(blog); $event.stopPropagation()">
+                        <span class="heart" [class.liked]="blog.isLiked">❤️</span>
+                        {{ blog.likes }}
+                    </button>
+                    <div class="views">
+                        👁 {{ blog.views }}
+                    </div>
+                </div>
+
+                <div class="actions">
+                    <button class="edit-btn" [routerLink]="['/blog/edit', blog._id]">
+                        ✏ Edit
+                    </button>
+                    <button class="delete-btn" (click)="delete(blog); $event.stopPropagation()">
+                        🗑 Delete
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Empty State -->
+    <div *ngIf="!isLoading && blogs.length === 0" class="empty-state">
+        <div class="empty-icon">📝</div>
+        <h3>No blogs yet</h3>
+        <p>Create your first blog post to get started!</p>
+        <button class="create-btn" routerLink="/blog/create">+ Create First Blog</button>
+    </div>
+</div>

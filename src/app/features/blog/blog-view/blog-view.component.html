@@ -1,0 +1,87 @@
+<div class="blog-view-container" *ngIf="blog">
+  <!-- Header -->
+  <header class="blog-header">
+    <button class="back-btn" (click)="goBack()" aria-label="Back to dashboard">
+      <span class="icon">🔙</span>
+      <span class="label">Back</span>
+    </button>
+  </header>
+
+  <!-- Hero Image -->
+  <div class="hero-section" *ngIf="blog.thumbnail">
+    <img [src]="blog.thumbnail" [alt]="blog.title" class="hero-img" loading="lazy" />
+  </div>
+
+  <!-- Main Content -->
+  <article class="blog-content">
+    <!-- Title -->
+    <h1 class="blog-title">{{ blog.title }}</h1>
+
+    <!-- YouTube Video -->
+    <div *ngIf="blog.youtubeLink" class="media-section video-section" (click)="toggleVideo()">
+      <div *ngIf="!blog.isPlaying" class="thumbnail-wrapper">
+        <img [src]="blog.thumbnail" [alt]="'Video thumbnail for ' + blog.title" class="video-thumbnail"
+          loading="lazy" />
+        <div class="play-overlay">
+          <div class="play-circle">
+            <span class="play-icon">▶</span>
+          </div>
+        </div>
+      </div>
+      <div class="responsive-video" *ngIf="blog.isPlaying">
+        <iframe [src]="blog.embedUrl" frameborder="0" allowfullscreen loading="lazy"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          referrerpolicy="strict-origin-when-cross-origin">
+        </iframe>
+      </div>
+    </div>
+
+    <!-- Instagram Embed - FULL SCREEN RESPONSIVE -->
+    <section *ngIf="blog.instagramLink" class="instagram-section">
+      <div class="ig-header">
+        <h3>📱 Instagram</h3>
+        <a [href]="blog.instagramLink" target="_blank" class="ig-link">
+          Open in App →
+        </a>
+      </div>
+
+      <!-- Dynamic Responsive Container -->
+      <div class="instagram-embed-container">
+        <iframe #instagramIframe [src]="blog.instagramEmbedUrl" class="instagram-iframe" frameborder="0" scrolling="no"
+          allowfullscreen loading="lazy" (load)="onInstagramLoad($event)">
+        </iframe>
+      </div>
+    </section>
+
+    <!-- Rich Content -->
+    <pre [innerText]="safeContent"></pre>
+
+    <!-- Stats & Actions -->
+    <footer class="blog-footer">
+      <div class="stats">
+        <button class="like-btn" (click)="likeBlog()">
+          <span class="heart" [class.liked]="blog.isLiked">❤️</span>
+          <span class="count">{{ blog.likes }}</span>
+        </button>
+        <div class="views">
+          <span class="icon">👁</span>
+          <span class="count">{{ blog.views }} views</span>
+        </div>
+      </div>
+    </footer>
+  </article>
+</div>
+
+<!-- Loading Spinner -->
+<div *ngIf="!blog" class="loading-state">
+  <div class="spinner"></div>
+  <p>Loading blog...</p>
+</div>
+
+<!-- Error State -->
+<div *ngIf="blog === null && !blog" class="error-state">
+  <div class="error-icon">😢</div>
+  <h2>Blog not found</h2>
+  <p>The blog you're looking for doesn't exist.</p>
+  <button class="back-btn" routerLink="/blogs">← Back to Blogs</button>
+</div>
