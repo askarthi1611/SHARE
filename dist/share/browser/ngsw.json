@@ -1,0 +1,99 @@
+{
+  "configVersion": 1,
+  "timestamp": 1772704932975,
+  "index": "/index.csr.html",
+  "assetGroups": [
+    {
+      "name": "app",
+      "installMode": "prefetch",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/chunk-5MS2VGPD.js",
+        "/chunk-VAPCMOG4.js",
+        "/favicon.ico",
+        "/index.html",
+        "/main-AF5ZHESH.js",
+        "/ngsw-worker.js",
+        "/polyfills-FFHMD2TL.js",
+        "/styles-D7NBMEDB.css"
+      ],
+      "patterns": []
+    },
+    {
+      "name": "assets",
+      "installMode": "lazy",
+      "updateMode": "prefetch",
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "urls": [
+        "/assets/data/Statement_karthi1611_10042025171546 - Copy.pdf",
+        "/assets/data/loan-statement.json",
+        "/assets/icons/apple-touch-icon.png",
+        "/assets/icons/favicon-96x96.png",
+        "/assets/icons/favicon.ico",
+        "/assets/icons/favicon.svg",
+        "/assets/icons/site.webmanifest",
+        "/assets/icons/web-app-manifest-192x192.png",
+        "/assets/icons/web-app-manifest-512x512.png"
+      ],
+      "patterns": []
+    }
+  ],
+  "dataGroups": [
+    {
+      "name": "api",
+      "patterns": [
+        "\\/api\\/.*"
+      ],
+      "strategy": "freshness",
+      "maxSize": 100,
+      "maxAge": 3600000,
+      "cacheQueryOptions": {
+        "ignoreVary": true
+      },
+      "version": 1
+    }
+  ],
+  "hashTable": {
+    "/assets/data/Statement_karthi1611_10042025171546 - Copy.pdf": "d76567e11d16996700d220299223563f2c55a338",
+    "/assets/data/loan-statement.json": "96b9d77aaff3f0f7fef59c62d2e792608839c39d",
+    "/assets/icons/apple-touch-icon.png": "4e8d37d5b748d23d166e53de98f6375a1cf311de",
+    "/assets/icons/favicon-96x96.png": "cc8c1b365d4b6e5cad1999867df767b3f6584e3f",
+    "/assets/icons/favicon.ico": "c254933fef165a0898f7850bd9026dd298e78508",
+    "/assets/icons/favicon.svg": "3a978c14f012e1af6f5853518a004acc04e98c65",
+    "/assets/icons/site.webmanifest": "3929dec542b29b4f06870af0a4ccfc423ad3c7c8",
+    "/assets/icons/web-app-manifest-192x192.png": "11ce7b5f46a4bdb96c3beafc1c0b66af29409cf0",
+    "/assets/icons/web-app-manifest-512x512.png": "c035ba0c9a65ae9a0572a65daec9ea24fcf24034",
+    "/chunk-5MS2VGPD.js": "a7cf361488a2c5dc246dd21d2089b1b607606f11",
+    "/chunk-VAPCMOG4.js": "ee8d32a129c6185a01a61ac8896fa19f016e08a5",
+    "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
+    "/index.html": "ed7414471df56d58c62bf6c7bedfa61b88cc9691",
+    "/main-AF5ZHESH.js": "7486956074b9900bf3ce91ae976f9339ad7428b2",
+    "/ngsw-worker.js": "8e3b82cb5fe8f31068fc296787ea1b01296e1232",
+    "/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
+    "/styles-D7NBMEDB.css": "f6ecf5622837f2832a1f88fafb0812cb3d319941"
+  },
+  "navigationUrls": [
+    {
+      "positive": true,
+      "regex": "^\\/.*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*\\.[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*$"
+    },
+    {
+      "positive": false,
+      "regex": "^\\/(?:.+\\/)?[^/]*__[^/]*\\/.*$"
+    }
+  ],
+  "navigationRequestStrategy": "performance"
+}
