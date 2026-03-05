@@ -1,0 +1,77 @@
+.dashboard {
+    padding: 20px;
+}
+
+.header {
+    background: #1976d2;
+    color: white;
+}
+
+.card-grid {
+    display: grid;
+    grid-template-columns:
+        repeat(auto-fit, minmax(220px, 1fr));
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+mat-card {
+    margin-bottom: 20px;
+    padding: 20px;
+}
+
+/* TIMELINE */
+
+.timeline {
+    display: flex;
+    overflow-x: auto;
+    gap: 12px;
+    padding: 15px;
+}
+
+.timeline-item {
+    min-width: 55px;
+    height: 55px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    background: #ddd;
+}
+
+/* STATUS */
+
+.completed {
+    background: #e8f5e9 !important;
+}
+
+.current {
+    background: #e3f2fd !important;
+    font-weight: bold;
+}
+
+.pending {
+    background: #fafafa !important;
+}
+
+/* timeline colors */
+
+.timeline-item.completed {
+    background: #4caf50 !important;
+    color: white;
+}
+
+.timeline-item.current {
+    background: #1976d2 !important;
+    color: white;
+    transform: scale(1.25);
+}
+
+.timeline-item.pending {
+    background: #cfd8dc !important;
+}
+
+table {
+    width: 100%;
+}

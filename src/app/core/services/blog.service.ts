@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 })
 export class BlogService {
 
-  private api = 'http://localhost:3000/api/blogs';
+  private api = 'https://asks99.onrender.com/api/blogs';
 
   constructor(private http: HttpClient) { }
 

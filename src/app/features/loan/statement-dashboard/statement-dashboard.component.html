@@ -1,0 +1,135 @@
+<div class="dashboard">
+
+    <!-- HEADER -->
+    <mat-card class="header">
+        <h2>{{data.loan.customer}}</h2>
+        <p>Loan Account : {{data.loan.account}}</p>
+    </mat-card>
+
+    <!-- SUMMARY -->
+    <div class="card-grid">
+
+        <mat-card>
+            <h4>Loan Amount</h4>
+            <h2>₹ {{data.loan.amount | number}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h4>Monthly EMI</h4>
+            <h2>₹ {{data.loan.emi | number}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h4>Completed</h4>
+            <h2>{{completedMonths}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h4>Remaining</h4>
+            <h2>{{remainingMonths}}</h2>
+        </mat-card>
+
+    </div>
+
+    <!-- PROGRESS -->
+    <mat-card>
+        <h3>Loan Completion</h3>
+
+        <mat-progress-bar mode="determinate" [value]="completionPercent">
+        </mat-progress-bar>
+
+        <p>
+            {{completionPercent | number:'1.0-0'}} %
+            Completed
+        </p>
+    </mat-card>
+
+    <!-- BALANCE -->
+    <mat-card>
+        <h3>Remaining Balance</h3>
+        <h2>₹ {{remainingBalance | number}}</h2>
+    </mat-card>
+
+
+    <!-- EMI BAR -->
+    <mat-card>
+        <canvas baseChart [type]="'bar'" [data]="emiBreakdownChart">
+        </canvas>
+    </mat-card>
+
+    <!-- DOUGHNUT -->
+    <mat-card>
+        <canvas baseChart [type]="'doughnut'" [data]="progressChart">
+        </canvas>
+    </mat-card>
+
+    <!-- TIMELINE -->
+    <mat-card>
+        <h3>EMI Timeline</h3>
+
+        <div class="timeline" #timeline>
+
+            <div *ngFor="let item of data.installments; let i=index" class="timeline-item" [ngClass]="getStatus(i)"
+                title="
+EMI {{i+1}}
+Date: {{item['Instrument Date'] | date}}
+">
+
+                {{i+1}}
+
+            </div>
+
+        </div>
+    </mat-card>
+    <!-- TABLE -->
+    <mat-card>
+
+        <h3>Statement Table</h3>
+
+        <table mat-table [dataSource]="data.installments">
+
+            <ng-container matColumnDef="Sr.No.">
+                <th mat-header-cell *matHeaderCellDef>No</th>
+                <td mat-cell *matCellDef="let e">
+                    {{e['Sr.No.']}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Instrument Date">
+                <th mat-header-cell *matHeaderCellDef>Date</th>
+                <td mat-cell *matCellDef="let e">
+                    {{e['Instrument Date']}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Instalment">
+                <th mat-header-cell *matHeaderCellDef>EMI</th>
+                <td mat-cell *matCellDef="let e">
+                    {{e['Instalment']}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Interest">
+                <th mat-header-cell *matHeaderCellDef>Interest</th>
+                <td mat-cell *matCellDef="let e">
+                    {{e['Interest']}}
+                </td>
+            </ng-container>
+
+            <ng-container matColumnDef="Principal">
+                <th mat-header-cell *matHeaderCellDef>Principal</th>
+                <td mat-cell *matCellDef="let e">
+                    {{e['Principal']}}
+                </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                [ngClass]="getStatus((row?.['Sr.No.'] || 1)-1)">
+            </tr>
+        </table>
+
+    </mat-card>
+
+</div>
