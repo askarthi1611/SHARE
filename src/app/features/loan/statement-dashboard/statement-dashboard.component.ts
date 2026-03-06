@@ -13,7 +13,7 @@ import {
 import { PLATFORM_ID } from '@angular/core';
 
 import statementData
-from './../../../../assets/data/loan-statement.json';
+  from './../../../../assets/data/loan-statement.json';
 
 @Component({
   selector: 'app-statement-dashboard',
@@ -21,14 +21,15 @@ from './../../../../assets/data/loan-statement.json';
   styleUrls: ['./statement-dashboard.component.css']
 })
 export class StatementDashboardComponent
-implements AfterViewInit {
+  implements AfterViewInit {
 
   @ViewChild('timeline') timeline!: ElementRef;
+  @ViewChild('timelinetable') timelinetable!: ElementRef;
 
-  isBrowser=false;
-  today=new Date();
+  isBrowser = false;
+  today = new Date();
 
-  displayedColumns=[
+  displayedColumns = [
     'Sr.No.',
     'Instrument Date',
     'Instalment',
@@ -39,113 +40,122 @@ implements AfterViewInit {
   //--------------------------------
   // MAIN DATA
   //--------------------------------
-  data:any={
-    loan:{},
-    installments:[]
+  data: any = {
+    loan: {},
+    installments: []
   };
 
   //--------------------------------
   // DASHBOARD VALUES
   //--------------------------------
-  completedMonths=0;
-  remainingMonths=0;
-  completionPercent=0;
-  remainingBalance=0;
-
+  totalMonths = 0;
+  completedMonths = 0;
+  remainingMonths = 0;
+  completionPercent = 0;
+  remainingBalance = 0;
+  totalPrincipalPaid = 0;
+  totalInterestPaid = 0;
+  totalAmountPaid = 0;
+  totalAmount = 0;
   //--------------------------------
   // CHARTS
   //--------------------------------
-  pieChartData:any;
-  balanceChartData:any;
-  emiBreakdownChart:any;
-  interestTrendChart:any;
-  progressChart:any;
+  pieChartData: any;
+  balanceChartData: any;
+  emiBreakdownChart: any;
+  interestTrendChart: any;
+  progressChart: any;
 
   constructor(
     @Inject(PLATFORM_ID)
-    private platformId:Object
-  ){
-    this.isBrowser=
+    private platformId: Object
+  ) {
+    this.isBrowser =
       isPlatformBrowser(this.platformId);
 
-    this.loadStatement();
-
-    setTimeout(()=>{
-      this.calculateSummary();
+    setTimeout(() => {
+      this.loadStatement();
     });
+
+    setTimeout(() => {
+      this.calculateSummary();
+    }, 100);
   }
 
-  ngAfterViewInit(){
-    if(!this.isBrowser) return;
+  ngAfterViewInit() {
+    if (!this.isBrowser) return;
 
-    setTimeout(()=>{
+    setTimeout(() => {
       this.autoScrollTimeline();
-    },400);
+      this.autoScrollTimelineTable();
+    }, 400);
   }
 
   //==================================================
   // LOAD JSON
   //==================================================
-  loadStatement(){
+  loadStatement() {
 
-    this.data.loan=statementData.loan;
+    this.data.loan = statementData.loan;
 
-    this.data.installments=
+    this.data.installments =
       statementData.installments.map(
-      (emi:any,index:number)=>{
+        (emi: any, index: number) => {
 
-        const d=emi['Instrument Date']
-          ?.split('-');
+          const d = emi['Instrument Date']
+            ?.split('-');
 
-        const isoDate=
-          `${d[2]}-${d[1]}-${d[0]}`;
+          const isoDate =
+            `${d[2]}-${d[1]}-${d[0]}`;
 
-        return{
-          ...emi,
-          'Sr.No.':index+1,
-          'Instrument Date':
-            new Date(isoDate),
+          return {
+            ...emi,
+            'Sr.No.': index + 1,
+            'Instrument Date':
+              new Date(isoDate),
 
-          Instalment:Number(
-            String(emi['Instalment'])
-            .replace(/[^\d]/g,'')
-          ),
+            Instalment: Number(
+              String(emi['Instalment'])
+                .replace(/[^\d]/g, '')
+            ) / 100,
 
-          Interest:Number(
-            String(emi['Interest'])
-            .replace(/[^\d]/g,'')
-          ),
+            Interest: Number(
+              String(emi['Interest'])
+                .replace(/[^\d]/g, '')
+            ) / 100,
 
-          Principal:Number(
-            String(emi['Principal'])
-            .replace(/[^\d]/g,'')
-          )
-        };
-      });
+            Principal: Number(
+              String(emi['Principal'])
+                .replace(/[^\d]/g, '')
+            ) / 100
+          };
+        });
   }
 
   //==================================================
   // EMI STATUS
   //==================================================
-  getStatus(index:number){
+  getStatus(index: number) {
 
-    const item=
-      this.data.installments[index];
+    const item = this.data.installments[index];
+    if (!item) return '';
 
-    if(!item) return '';
+    const emiDate = new Date(item['Instrument Date']);
+    const today = new Date();
 
-    const emiDate=
-      new Date(item['Instrument Date']);
+    const emiMonth = emiDate.getMonth();
+    const emiYear = emiDate.getFullYear();
 
-    const today=new Date();
-    today.setHours(0,0,0,0);
-    emiDate.setHours(0,0,0,0);
+    const currentMonth = today.getMonth();
+    const currentYear = today.getFullYear();
 
-    if(emiDate<today)
+    if (emiYear < currentYear || (emiYear === currentYear && emiMonth < currentMonth)) {
       return 'completed';
+    }
 
-    if(emiDate.getTime()===today.getTime())
+    if (emiYear === currentYear && emiMonth === currentMonth) {
       return 'current';
+    }
 
     return 'remaining';
   }
@@ -153,66 +163,68 @@ implements AfterViewInit {
   //==================================================
   // SUMMARY + ALL CHARTS
   //==================================================
-  calculateSummary(){
+  calculateSummary() {
 
-    let completed=0;
-    let principalPaid=0;
-    let interestPaid=0;
+    let completed = 0;
+    let principalPaid = 0;
+    let interestPaid = 0;
 
-    const balanceArr:number[]=[];
-    const labels:string[]=[];
-    const principalArr:number[]=[];
-    const interestArr:number[]=[];
+    const balanceArr: number[] = [];
+    const labels: string[] = [];
+    const principalArr: number[] = [];
+    const interestArr: number[] = [];
 
-    let balance=
+    let balance =
       this.data.loan.amount;
 
     this.data.installments
-    .forEach((emi:any,i:number)=>{
+      .forEach((emi: any, i: number) => {
 
-      labels.push(`EMI ${i+1}`);
+        labels.push(`EMI ${i + 1}`);
 
-      principalArr.push(emi.Principal);
-      interestArr.push(emi.Interest);
+        principalArr.push(emi.Principal);
+        interestArr.push(emi.Interest);
 
-      balance-=emi.Principal;
-      balanceArr.push(
-        Math.max(balance,0)
-      );
+        balance -= emi.Principal;
+        balanceArr.push(
+          Math.max(balance, 0)
+        );
 
-      const status=
-        this.getStatus(i);
+        const status =
+          this.getStatus(i);
 
-      if(
-        status==='completed'||
-        status==='current'
-      ){
-        completed++;
-        principalPaid+=emi.Principal;
-        interestPaid+=emi.Interest;
-      }
-    });
-
-    this.completedMonths=completed;
-    this.remainingMonths=
+        if (
+          status === 'completed' ||
+          status === 'current'
+        ) {
+          completed++;
+          principalPaid += emi.Principal;
+          interestPaid += emi.Interest;
+        }
+      });
+    this.totalMonths = this.data.installments.length;
+    this.completedMonths = completed;
+    this.remainingMonths =
       this.data.installments.length
-      -completed;
+      - completed;
 
-    this.completionPercent=
-      completed/
-      this.data.installments.length*100;
+    this.completionPercent =
+      completed /
+      this.data.installments.length * 100;
 
-    this.remainingBalance=
-      this.data.loan.amount
-      -principalPaid;
-
-    if(!this.isBrowser) return;
+    this.totalPrincipalPaid = principalPaid;
+    this.totalInterestPaid = interestPaid;
+    this.totalAmountPaid = principalPaid + interestPaid;
+    this.remainingBalance =
+      (principalArr.reduce((a, b) => a + b, 0) + interestArr.reduce((a, b) => a + b, 0)) - (principalPaid + interestPaid);
+    this.totalAmount = (principalArr.reduce((a, b) => a + b, 0) + interestArr.reduce((a, b) => a + b, 0))
+    if (!this.isBrowser) return;
 
     //---------------- PIE
-    this.pieChartData={
-      labels:['Principal','Interest'],
-      datasets:[{
-        data:[
+    this.pieChartData = {
+      labels: ['Principal', 'Interest'],
+      datasets: [{
+        data: [
           principalPaid,
           interestPaid
         ]
@@ -220,37 +232,39 @@ implements AfterViewInit {
     };
 
     //---------------- BALANCE LINE
-    this.balanceChartData={
+    this.balanceChartData = {
       labels,
-      datasets:[{
-        label:'Remaining Balance',
-        data:balanceArr
+      datasets: [{
+        label: 'Remaining Balance',
+        data: balanceArr
       }]
     };
 
     //---------------- BAR
-    this.emiBreakdownChart={
+    this.emiBreakdownChart = {
       labels,
-      datasets:[
-        {label:'Principal',data:principalArr},
-        {label:'Interest',data:interestArr}
+      datasets: [
+        { label: 'Principal', data: principalArr },
+        { label: 'Interest', data: interestArr }
       ]
     };
 
     //---------------- INTEREST TREND
-    this.interestTrendChart={
+    this.interestTrendChart = {
       labels,
-      datasets:[
-        {label:'Interest Trend',
-        data:interestArr}
+      datasets: [
+        {
+          label: 'Interest Trend',
+          data: interestArr
+        }
       ]
     };
 
     //---------------- PROGRESS
-    this.progressChart={
-      labels:['Completed','Remaining'],
-      datasets:[{
-        data:[
+    this.progressChart = {
+      labels: ['Completed', 'Remaining'],
+      datasets: [{
+        data: [
           this.completedMonths,
           this.remainingMonths
         ]
@@ -261,23 +275,42 @@ implements AfterViewInit {
   //==================================================
   // AUTO SCROLL CURRENT EMI
   //==================================================
-  autoScrollTimeline(){
+  autoScrollTimeline() {
 
-    if(!this.timeline) return;
+    if (!this.timeline) return;
 
-    const container=
+    const container =
       this.timeline.nativeElement;
 
-    const current=
+    const current =
       container.querySelector('.current');
 
-    if(!current) return;
+    if (!current) return;
 
     container.scrollTo({
       left:
         current.offsetLeft
-        -container.offsetWidth/2,
-      behavior:'smooth'
+        - container.offsetWidth / 2,
+      behavior: 'smooth'
+    });
+  }
+  autoScrollTimelineTable() {
+
+    if (!this.timelinetable) return;
+
+    const container =
+      this.timelinetable.nativeElement;
+
+    const current =
+      container.querySelector('.current');
+
+    if (!current) return;
+
+    container.scrollTo({
+      top:
+        current.offsetTop
+        - container.offsetHeight / 2,
+      behavior: 'smooth'
     });
   }
 }

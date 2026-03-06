@@ -75,3 +75,27 @@ mat-card {
 table {
     width: 100%;
 }
+
+.headerul{
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+.headerul li{
+    width: 50%;
+}
+.tableContainer{
+    overflow-x: auto;
+    height: 70vh;
+    overflow: auto;
+}
+.tableContainer th{
+    position: sticky;
+    top: 0;
+}
+@media screen and (max-width: 768px) {
+    .headerul li{
+        width: 100%;
+    }
+}

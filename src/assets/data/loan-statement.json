@@ -1,5 +1,9 @@
 {
     "loan": {
+        "CustomerID": 3415952,
+        "ContactNo": 7708550202,
+        "CustomerName": "Mr. S Karthikeyan",
+        "Accountnumber": "HOU/RSIV/1124/5110910",
         "account": "HOURSIV11245110910",
         "customer": "Mr. S Karthikeyan",
         "amount": 1558634,
@@ -7,7 +11,13 @@
         "rate": 10.65,
         "tenure": 180,
         "startDate": "2025-02-05",
-        "endDate": "2040-01-05"
+        "endDate": "2040-01-05",
+        "productType": "Housing Loan",
+        "scheme": "Purchase Loan-Roshni/Floating",
+        "loanAmount": 1558634,
+        "insurance": 58654,
+        "totalDisbursement": 1558634,
+        "interestRate": "10.65%"
     },
     "summary": {
         "totalInterest": 3134944,
@@ -16,33 +26,6 @@
         "remainingPrincipal": 1558634
     },
     "installments": [
-
-        {
-            "Sr.No.": "1",
-            "Instrument Date": "19-12-2024",
-            "Rate Type": "Floating",
-            "Instalment": "Rs.0.00",
-            "Interest": "Rs.0.00",
-            "Principal": "Rs.0.00",
-            "Transaction Date": "19-12-2024"
-        },
-        {
-            "Sr.No.": "2",
-            "Instrument Date": "19-12-2024",
-            "Rate Type": "Floating",
-            "Instalment": "Rs.0.00",
-            "Interest": "Rs.0.00",
-            "Principal": "Rs.0.00",
-            "Transaction Date": "19-12-2024"
-        },
-        {
-            "Sr.No.": "3",
-            "Instrument Date": "05-01-2025",
-            "Rate Type": "Floating",
-            "Instalment": "Rs.7,731.00",
-            "Interest": "Rs.7,731.00",
-            "Principal": "Rs.0.00"
-        },
         {
             "Sr.No.": "4",
             "Instrument Date": "05-02-2025",
@@ -1478,9 +1461,10 @@
         {
             "Sr.No.": "183",
             "Instrument Date": "05-01-2040",
-            "Rate Type": "Rs.17,088.00",
-            "Instalment": "Rs.150.00",
-            "Interest": "Rs.16,938.00"
+            "Rate Type": "",
+            "Instalment": "Rs.17,088.00",
+            "Interest": "Rs.150.00",
+            "Principal": "Rs.16,938.00"
         }
     ]
 }

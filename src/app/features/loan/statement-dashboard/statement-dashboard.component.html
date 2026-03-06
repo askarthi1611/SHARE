@@ -1,11 +1,30 @@
 <div class="dashboard">
+    <button class="back-btn" routerLink="/">← Back</button>
 
     <!-- HEADER -->
     <mat-card class="header">
-        <h2>{{data.loan.customer}}</h2>
-        <p>Loan Account : {{data.loan.account}}</p>
-    </mat-card>
 
+        <h2>{{ data.loan.customer }}</h2>
+        <p><b>Loan Account :</b> {{ data.loan.account }}</p>
+
+        <ul class="headerul">
+            <li><b>Customer ID :</b> {{ data.loan.CustomerID }}</li>
+            <li><b>Customer Name :</b> {{ data.loan.CustomerName }}</li>
+            <li><b>Contact No :</b> {{ data.loan.ContactNo }}</li>
+            <li><b>Account Number :</b> {{ data.loan.Accountnumber }}</li>
+            <li><b>Product Type :</b> {{ data.loan.productType }}</li>
+            <li><b>Loan Scheme :</b> {{ data.loan.scheme }}</li>
+            <li><b>Loan Amount :</b> ₹{{ data.loan.loanAmount | number:'1.0-0' }}</li>
+            <li><b>Insurance :</b> ₹{{ data.loan.insurance | number:'1.0-0' }}</li>
+            <li><b>Loan Tenure :</b> {{ data.loan.tenure }} months</li>
+            <li><b>Installment Start :</b> {{ data.loan.startDate | date:'MMMM d, y' }}</li>
+            <li><b>Installment End :</b> {{ data.loan.endDate | date:'MMMM d, y' }}</li>
+            <li><b>Interest Rate :</b> {{ data.loan.interestRate }}</li>
+            <li><b>Current EMI :</b> ₹{{ data.loan.emi | number:'1.2-2' }}</li>
+            <li><b>Total Disbursement :</b> ₹{{ data.loan.totalDisbursement | number:'1.0-0' }}</li>
+        </ul>
+
+    </mat-card>
     <!-- SUMMARY -->
     <div class="card-grid">
 
@@ -19,6 +38,16 @@
             <h2>₹ {{data.loan.emi | number}}</h2>
         </mat-card>
 
+
+
+    </div>
+    <div class="card-grid">
+
+        <mat-card>
+            <h4>Total Months</h4>
+            <h2>{{totalMonths}}</h2>
+        </mat-card>
+
         <mat-card>
             <h4>Completed</h4>
             <h2>{{completedMonths}}</h2>
@@ -28,6 +57,27 @@
             <h4>Remaining</h4>
             <h2>{{remainingMonths}}</h2>
         </mat-card>
+
+    </div>
+
+    <!-- SUMMARY -->
+    <div class="card-grid">
+
+        <mat-card>
+            <h4>Total Principal Paid</h4>
+            <h2>₹ {{totalPrincipalPaid | number}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h4>Total Interest Paid</h4>
+            <h2>₹ {{totalInterestPaid | number}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h4>Total Amount Paid</h4>
+            <h2>₹ {{totalAmountPaid | number}}</h2>
+        </mat-card>
+
 
     </div>
 
@@ -44,13 +94,21 @@
         </p>
     </mat-card>
 
-    <!-- BALANCE -->
-    <mat-card>
-        <h3>Remaining Balance</h3>
-        <h2>₹ {{remainingBalance | number}}</h2>
-    </mat-card>
+    <div class="card-grid">
+
+        <!-- BALANCE -->
+        <mat-card>
+            <h3>Remaining Balance</h3>
+            <h2>₹ {{remainingBalance | number}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h3>Total Amount</h3>
+            <h2>₹ {{totalAmount | number}}</h2>
+        </mat-card>
 
 
+    </div>
     <!-- EMI BAR -->
     <mat-card>
         <canvas baseChart [type]="'bar'" [data]="emiBreakdownChart">
@@ -85,51 +143,57 @@ Date: {{item['Instrument Date'] | date}}
     <mat-card>
 
         <h3>Statement Table</h3>
+        <div class="tableContainer" #timelinetable>
+            <p class="table-note">* Amounts are in Indian Rupees (₹)</p>
 
-        <table mat-table [dataSource]="data.installments">
+            <table mat-table [dataSource]="data.installments">
 
-            <ng-container matColumnDef="Sr.No.">
-                <th mat-header-cell *matHeaderCellDef>No</th>
-                <td mat-cell *matCellDef="let e">
-                    {{e['Sr.No.']}}
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="Sr.No.">
+                    <th mat-header-cell *matHeaderCellDef>No</th>
+                    <td mat-cell *matCellDef="let e">
+                        {{e['Sr.No.']}}
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="Instrument Date">
-                <th mat-header-cell *matHeaderCellDef>Date</th>
-                <td mat-cell *matCellDef="let e">
-                    {{e['Instrument Date']}}
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="Instrument Date">
+                    <th mat-header-cell *matHeaderCellDef>Date</th>
+                    <td mat-cell *matCellDef="let e">
+                        {{e['Instrument Date'] | date}}
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="Instalment">
-                <th mat-header-cell *matHeaderCellDef>EMI</th>
-                <td mat-cell *matCellDef="let e">
-                    {{e['Instalment']}}
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="Instalment">
+                    <th mat-header-cell *matHeaderCellDef>EMI</th>
+                    <td mat-cell *matCellDef="let e">
+                        <!-- {{e['Instalment']}} -->
+                        {{ e['Instalment'] | currency:'INR':'symbol':'1.2-2' }}
 
-            <ng-container matColumnDef="Interest">
-                <th mat-header-cell *matHeaderCellDef>Interest</th>
-                <td mat-cell *matCellDef="let e">
-                    {{e['Interest']}}
-                </td>
-            </ng-container>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="Principal">
-                <th mat-header-cell *matHeaderCellDef>Principal</th>
-                <td mat-cell *matCellDef="let e">
-                    {{e['Principal']}}
-                </td>
-            </ng-container>
+                <ng-container matColumnDef="Interest">
+                    <th mat-header-cell *matHeaderCellDef>Interest</th>
+                    <td mat-cell *matCellDef="let e">
+                        <!-- {{e['Interest']}} -->
+                        {{ e['Interest'] | currency:'INR':'symbol':'1.2-2' }}
+                    </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <ng-container matColumnDef="Principal">
+                    <th mat-header-cell *matHeaderCellDef>Principal</th>
+                    <td mat-cell *matCellDef="let e">
+                        <!-- {{e['Principal']}} -->
+                        {{ e['Principal'] | currency:'INR':'symbol':'1.2-2' }}
+                    </td>
+                </ng-container>
 
-            <tr mat-row *matRowDef="let row; columns: displayedColumns;"
-                [ngClass]="getStatus((row?.['Sr.No.'] || 1)-1)">
-            </tr>
-        </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
 
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"
+                    [ngClass]="getStatus((row?.['Sr.No.'] || 1)-1)">
+                </tr>
+            </table>
+        </div>
     </mat-card>
 
 </div>
