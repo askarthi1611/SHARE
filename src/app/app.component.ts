@@ -24,6 +24,10 @@ export class AppComponent implements OnInit, OnDestroy {
     if (isPlatformBrowser(this.platformId)) {
       this.initPWA();
       this.removeSplashScreen();
+      this.initNotifications();
+      setInterval(() => {
+        this.sendTestNotification();
+      }, 600000); // every 10 minutes
     }
   }
 
@@ -100,53 +104,81 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   //Push Notifications - Always Active + Click → Create Blog
-showNotifications = false;
-permissionGranted = false;
-registration: any;
+  showNotifications = false;
+  permissionGranted = true;
+  registration: any;
 
-async initPushNotifications() {
-  if ('Notification' in window && 'serviceWorker' in navigator) {
-    // Request permission
-    const permission = await Notification.requestPermission();
-    this.permissionGranted = permission === 'granted';
-    
-    if (this.permissionGranted) {
-      // Register service worker for notifications
-      this.registration = await navigator.serviceWorker.register('/ngsw-worker.js');
-      this.showNotifications = true;
-      this.subscribeToPush();
+  async initPushNotifications() {
+    if ('Notification' in window && 'serviceWorker' in navigator) {
+      // Request permission
+      const permission = await Notification.requestPermission();
+      this.permissionGranted = permission === 'granted';
+
+      if (this.permissionGranted) {
+        // Register service worker for notifications
+        this.registration = await navigator.serviceWorker.register('/ngsw-worker.js');
+        this.showNotifications = true;
+        // this.subscribeToPush();
+        this.sendTestNotification();
+      }
     }
   }
-}
 
-subscribeToPush() {
-  // Subscribe to push service (your backend API)
-  this.registration.pushManager.subscribe({
-    userVisibleOnly: true,
-    applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY' // Get from backend
-  }).then((subscription:any) => {
-    console.log('Push subscription:', subscription);
-    // Send to your backend
-    // this.blogService.savePushSubscription(subscription).subscribe();
-  });
-}
-
-// Send notification (call anytime)
-sendTestNotification() {
-  if (this.permissionGranted) {
-    navigator.serviceWorker.ready.then((registration) => {
-      registration.showNotification('New Blog Idea! 🚀', {
-        body: 'Click to create your next viral post',
-        icon: '/assets/icons/icon-192x192.png',
-        badge: '/assets/icons/badge-72x72.png',
-        actions: [{
-          action: 'create',
-          title: 'Create Blog ➕'
-        }],
-        data: { url: '/blog/create' }
-      } as any);
+  subscribeToPush() {
+    // Subscribe to push service (your backend API)
+    this.registration.pushManager.subscribe({
+      userVisibleOnly: true,
+      applicationServerKey: 'YOUR_VAPID_PUBLIC_KEY' // Get from backend
+    }).then((subscription: any) => {
+      console.log('Push subscription:', subscription);
+      // Send to your backend
+      // this.blogService.savePushSubscription(subscription).subscribe();
     });
   }
-}
+
+  // Send notification (call anytime)
+  sendTestNotification() {
+    if (this.permissionGranted) {
+      navigator.serviceWorker.ready.then((registration) => {
+        registration.showNotification('New Blog Idea! 🚀', {
+          body: 'Click to create your next viral post',
+          icon: '/assets/icons/icon-192x192.png',
+          badge: '/assets/icons/badge-72x72.png',
+          actions: [{
+            action: 'create',
+            title: 'Create Blog ➕'
+          }],
+          data: { url: '/blog/create' }
+        } as any);
+      });
+    }
+  }
+
+  async initNotifications() {
+
+    if (!('Notification' in window)) {
+      console.log('Notifications not supported');
+      return;
+    }
+
+    const permission = await Notification.requestPermission();
+
+    if (permission === 'granted') {
+
+      setTimeout(() => {
+
+        const notification = new Notification('New Blog Idea 🚀', {
+          body: 'Click to create your next viral post',
+          icon: '/assets/icons/icon-192x192.png'
+        });
+
+        notification.onclick = () => {
+          window.open('/blog/create', '_blank');
+        };
+
+      }, 5000); // show after 5 seconds
+
+    }
+  }
 
 }

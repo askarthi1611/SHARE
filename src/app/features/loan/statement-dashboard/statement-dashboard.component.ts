@@ -57,6 +57,10 @@ export class StatementDashboardComponent
   totalInterestPaid = 0;
   totalAmountPaid = 0;
   totalAmount = 0;
+  remainingPrincipal = 0;
+  remainingInterest = 0;
+  totalInterestAmount = 0;
+  totalPrincipalAmount = 0;
   //--------------------------------
   // CHARTS
   //--------------------------------
@@ -215,9 +219,29 @@ export class StatementDashboardComponent
     this.totalPrincipalPaid = principalPaid;
     this.totalInterestPaid = interestPaid;
     this.totalAmountPaid = principalPaid + interestPaid;
+    this.remainingPrincipal = principalArr.reduce((a, b) => a + b, 0) - principalPaid;
+    this.remainingInterest = interestArr.reduce((a, b) => a + b, 0) - interestPaid;
+    this.totalInterestAmount = interestArr.reduce((a, b) => a + b, 0);
+    this.totalPrincipalAmount = principalArr.reduce((a, b) => a + b, 0);
     this.remainingBalance =
       (principalArr.reduce((a, b) => a + b, 0) + interestArr.reduce((a, b) => a + b, 0)) - (principalPaid + interestPaid);
     this.totalAmount = (principalArr.reduce((a, b) => a + b, 0) + interestArr.reduce((a, b) => a + b, 0))
+
+    const today = new Date();
+
+const currentIndex = this.data.installments.findIndex((item:any) => {
+  const emiDate = new Date(item['Instrument Date']);
+  return emiDate.getMonth() === today.getMonth() &&
+         emiDate.getFullYear() === today.getFullYear();
+});
+
+const principalColors = principalArr.map((_, i) =>
+  i === currentIndex ? '#ff9800' : '#4caf50'
+);
+
+const interestColors = interestArr.map((_, i) =>
+  i === currentIndex ? '#ff5722' : '#90caf9'
+);
     if (!this.isBrowser) return;
 
     //---------------- PIE
@@ -241,13 +265,29 @@ export class StatementDashboardComponent
     };
 
     //---------------- BAR
+    // this.emiBreakdownChart = {
+    //   labels,
+    //   datasets: [
+    //     { label: 'Principal', data: principalArr },
+    //     { label: 'Interest', data: interestArr }
+    //   ]
+    // };
+
     this.emiBreakdownChart = {
-      labels,
-      datasets: [
-        { label: 'Principal', data: principalArr },
-        { label: 'Interest', data: interestArr }
-      ]
-    };
+  labels,
+  datasets: [
+    {
+      label: 'Principal',
+      data: principalArr,
+      backgroundColor: principalColors
+    },
+    {
+      label: 'Interest',
+      data: interestArr,
+      backgroundColor: interestColors
+    }
+  ]
+};
 
     //---------------- INTEREST TREND
     this.interestTrendChart = {

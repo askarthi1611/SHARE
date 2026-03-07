@@ -1,5 +1,5 @@
 <div class="dashboard">
-    <button class="back-btn" routerLink="/">← Back</button>
+    <button class="back-btn" routerLink="/">←</button>
 
     <!-- HEADER -->
     <mat-card class="header">
@@ -105,6 +105,21 @@
         <mat-card>
             <h3>Total Amount</h3>
             <h2>₹ {{totalAmount | number}}</h2>
+        </mat-card>
+
+
+    </div>
+    <div class="card-grid">
+
+        <!-- BALANCE -->
+        <mat-card>
+            <h3>Remaining Principal</h3>
+            <h2>₹ {{remainingPrincipal | number:'1.2-2'}} / ₹{{totalPrincipalAmount | number:'1.2-2'}}</h2>
+        </mat-card>
+
+        <mat-card>
+            <h3>Remaining Interest</h3>
+            <h2>₹ {{remainingInterest | number:'1.2-2'}} / ₹{{totalInterestAmount | number:'1.2-2'}}</h2>
         </mat-card>
 
 
