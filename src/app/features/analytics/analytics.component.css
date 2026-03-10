@@ -1,0 +1,39 @@
+.analytics-container{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
+gap:20px;
+padding:30px;
+}
+
+.chart-card{
+padding:20px;
+border-radius:16px;
+box-shadow:0 10px 30px rgba(0,0,0,0.15);
+background:white;
+transition:0.3s;
+}
+
+.chart-card:hover{
+transform:translateY(-5px);
+box-shadow:0 15px 35px rgba(0,0,0,0.2);
+}
+
+canvas{
+max-height:300px;
+}
+
+.grid {
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+
+}
+
+@media(max-width:900px) {
+
+    .grid {
+        grid-template-columns: 1fr;
+    }
+
+}

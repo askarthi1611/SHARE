@@ -26,7 +26,7 @@ export class AppComponent implements OnInit, OnDestroy {
       this.removeSplashScreen();
       this.initNotifications();
       setInterval(() => {
-        this.sendTestNotification();
+        // this.sendTestNotification();
       }, 600000); // every 10 minutes
     }
   }
@@ -119,7 +119,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.registration = await navigator.serviceWorker.register('/ngsw-worker.js');
         this.showNotifications = true;
         // this.subscribeToPush();
-        this.sendTestNotification();
+        // this.sendTestNotification();
       }
     }
   }

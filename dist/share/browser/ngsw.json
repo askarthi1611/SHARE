@@ -1,6 +1,6 @@
 {
   "configVersion": 1,
-  "timestamp": 1772704932975,
+  "timestamp": 1773162271244,
   "index": "/index.csr.html",
   "assetGroups": [
     {
@@ -11,14 +11,14 @@
         "ignoreVary": true
       },
       "urls": [
-        "/chunk-5MS2VGPD.js",
-        "/chunk-VAPCMOG4.js",
+        "/chunk-T3I2544Y.js",
+        "/chunk-XUV33CPC.js",
         "/favicon.ico",
         "/index.html",
-        "/main-AF5ZHESH.js",
+        "/main-UOMMUJE2.js",
         "/ngsw-worker.js",
         "/polyfills-FFHMD2TL.js",
-        "/styles-D7NBMEDB.css"
+        "/styles-3FCRQESZ.css"
       ],
       "patterns": []
     },
@@ -60,7 +60,7 @@
   ],
   "hashTable": {
     "/assets/data/Statement_karthi1611_10042025171546 - Copy.pdf": "d76567e11d16996700d220299223563f2c55a338",
-    "/assets/data/loan-statement.json": "96b9d77aaff3f0f7fef59c62d2e792608839c39d",
+    "/assets/data/loan-statement.json": "ad4a45afcbdd66063bb9de4ea61fb9a6c5870ec3",
     "/assets/icons/apple-touch-icon.png": "4e8d37d5b748d23d166e53de98f6375a1cf311de",
     "/assets/icons/favicon-96x96.png": "cc8c1b365d4b6e5cad1999867df767b3f6584e3f",
     "/assets/icons/favicon.ico": "c254933fef165a0898f7850bd9026dd298e78508",
@@ -68,14 +68,14 @@
     "/assets/icons/site.webmanifest": "3929dec542b29b4f06870af0a4ccfc423ad3c7c8",
     "/assets/icons/web-app-manifest-192x192.png": "11ce7b5f46a4bdb96c3beafc1c0b66af29409cf0",
     "/assets/icons/web-app-manifest-512x512.png": "c035ba0c9a65ae9a0572a65daec9ea24fcf24034",
-    "/chunk-5MS2VGPD.js": "a7cf361488a2c5dc246dd21d2089b1b607606f11",
-    "/chunk-VAPCMOG4.js": "ee8d32a129c6185a01a61ac8896fa19f016e08a5",
+    "/chunk-T3I2544Y.js": "0e4b6dcd769f3621367c1425ab762c682d80c6dc",
+    "/chunk-XUV33CPC.js": "d80a89c90cf5bff5a3c91edc3ac6b038fb7fb5f7",
     "/favicon.ico": "9c39f434fe1261f68c5e3eefdf734630d99c5670",
-    "/index.html": "ed7414471df56d58c62bf6c7bedfa61b88cc9691",
-    "/main-AF5ZHESH.js": "7486956074b9900bf3ce91ae976f9339ad7428b2",
+    "/index.html": "d1d7eccf7f4aa64acbeb068c139526250172101f",
+    "/main-UOMMUJE2.js": "00171f7dd4fdf1b22a0617c3f579127e1bd686d9",
     "/ngsw-worker.js": "8e3b82cb5fe8f31068fc296787ea1b01296e1232",
     "/polyfills-FFHMD2TL.js": "f49b49a155bc7d192db62a4c15d0a612b460a667",
-    "/styles-D7NBMEDB.css": "f6ecf5622837f2832a1f88fafb0812cb3d319941"
+    "/styles-3FCRQESZ.css": "bacb6087387676beb1a23d3a4cbc6e923733dd4e"
   },
   "navigationUrls": [
     {

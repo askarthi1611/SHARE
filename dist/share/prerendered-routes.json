@@ -2,6 +2,11 @@
   "routes": [
     "/",
     "/blog/create",
+    "/calendar",
+    "/dashboard",
+    "/expenses",
+    "/expenses/create",
+    "/notifications",
     "/statement"
   ]
 }
