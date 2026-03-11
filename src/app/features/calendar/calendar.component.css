@@ -1,0 +1,21 @@
+.calendar-header{
+display:flex;
+gap:10px;
+margin-bottom:15px;
+}
+
+.calendar-header button{
+background:#2196F3;
+border:none;
+color:white;
+padding:8px 15px;
+border-radius:6px;
+cursor:pointer;
+}
+
+.glass-card{
+background:white;
+padding:20px;
+border-radius:10px;
+box-shadow:0 5px 15px rgba(0,0,0,0.1);
+}

@@ -4,6 +4,8 @@
     "/blog/create",
     "/calendar",
     "/dashboard",
+    "/events",
+    "/events/create",
     "/expenses",
     "/expenses/create",
     "/notifications",

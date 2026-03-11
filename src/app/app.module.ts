@@ -60,6 +60,8 @@ import { MatIconModule } from '@angular/material/icon'
 import { MatDialogModule } from '@angular/material/dialog';
 //matAutocomplete
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
+import { EventCreateComponent } from './features/event-create/event-create.component';
+import { EventListComponent } from './features/event-list/event-list.component';
 
 @NgModule({
   declarations: [
@@ -73,7 +75,9 @@ import { MatAutocompleteModule } from '@angular/material/autocomplete';
     CalendarComponent,
     AnalyticsComponent,
     NotificationsComponent,
-    DashboardComponent
+    DashboardComponent,
+    EventCreateComponent,
+    EventListComponent
   ],
 
   imports: [

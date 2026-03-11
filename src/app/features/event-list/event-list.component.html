@@ -1,0 +1,41 @@
+<div class="event-list-container">
+
+<h2>Event List</h2>
+
+<div class="event-card" *ngFor="let event of events" [style.border-left]="'6px solid ' + event.color">
+
+<div class="event-info">
+
+<h3>{{event.title}}</h3>
+
+<p>{{event.description}}</p>
+
+<p>
+📍 {{event.location}}
+</p>
+
+<p>
+📅 {{event.date}} | ⏰ {{event.startTime}} - {{event.endTime}}
+</p>
+
+<span class="tag">
+{{event.eventType}}
+</span>
+
+</div>
+
+<div class="actions">
+
+<button class="edit-btn">
+Edit
+</button>
+
+<button class="delete-btn" (click)="deleteEvent(event._id)">
+Delete
+</button>
+
+</div>
+
+</div>
+
+</div>

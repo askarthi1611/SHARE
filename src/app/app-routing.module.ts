@@ -9,6 +9,8 @@ import { ExpenseCreateComponent } from './features/expense-create/expense-create
 import { ExpenseListComponent } from './features/expense-list/expense-list.component';
 import { DashboardComponent } from './features/dashboard/dashboard.component';
 import { NotificationsComponent } from './features/notifications/notifications.component';
+import { EventCreateComponent } from './features/event-create/event-create.component';
+import { EventListComponent } from './features/event-list/event-list.component';
 
 const routes: Routes = [
   { path: '', component: BlogDashboardComponent },
@@ -24,6 +26,8 @@ const routes: Routes = [
   { path: 'dashboard', component: DashboardComponent },
   //notifications
   { path: 'notifications', component: NotificationsComponent }, 
+  { path: 'events/create', component: EventCreateComponent }, 
+  { path: 'events', component: EventListComponent }, 
 
   { path: '**', redirectTo: '' }
 

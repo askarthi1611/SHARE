@@ -35,6 +35,9 @@ export class ExpenseListComponent {
 
   deleteExpense(id: string) {
 
+    if (!confirm('Are you sure you want to delete this expense?')) {
+      return
+    }
     this.expenseService.deleteExpense(id)
       .subscribe(() => {
         this.filter('monthly')
