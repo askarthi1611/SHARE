@@ -1,33 +1,99 @@
 <div class="particle-bg"></div>
 
-<!-- ✅ FIXED Install Banner -->
-<div class="install-banner" *ngIf="showInstallBanner">
-  <button class="pwa-install-btn" (click)="installApp()">
-    <span class="icon">📱</span>
-    Install SHARE App
-    <span class="close-btn" (click)="showInstallBanner = false">✕</span>
-  </button>
-</div>
-
 <!-- Splash Screen -->
 <div id="splash-screen" class="splash-screen">
   <div class="splash-logo">🚀 SHARE</div>
   <div class="splash-spinner"></div>
 </div>
 
+<!-- ================= DESKTOP NAV ================= -->
+
+<nav class="top-nav">
+
+  <div class="nav-left">
+
+    <a routerLink="/" routerLinkActive="active" class="nav-item">
+      <span class="icon">🏠</span>
+    </a>
+
+    <!-- Expenses Dropdown -->
+    <div class="nav-item dropdown">
+      <span class="icon">💰</span>
+
+      <div class="dropdown-menu">
+        <a routerLink="/expenses/create">➕ Add Expense</a>
+        <a routerLink="/expenses">📋 Expense List</a>
+        <a routerLink="/statement">📊 Statement</a>
+      </div>
+
+    </div>
+
+    <!-- Analytics Dropdown -->
+    <div class="nav-item dropdown">
+      <span class="icon">📅</span>
+
+      <div class="dropdown-menu">
+        <a routerLink="/calendar">Calendar</a>
+        <a routerLink="/dashboard">Dashboard</a>
+      </div>
+
+    </div>
+
+    <a routerLink="/notifications" routerLinkActive="active" class="nav-item">
+      <span class="icon">🔔</span>
+    </a>
+
+    <a routerLink="/profile" routerLinkActive="active" class="nav-item">
+      <span class="icon">👤</span>
+    </a>
+
+  </div>
+
+</nav>
+
+<!-- ================= MAIN CONTENT ================= -->
+
 <main class="app-main">
   <router-outlet></router-outlet>
 </main>
 
-<!-- Bottom Nav -->
+<!-- ================= MOBILE NAV ================= -->
+
 <nav class="bottom-nav">
-  <a routerLink="/" routerLinkActive="active">🏠</a>
-  <a routerLink="/blog/create" routerLinkActive="active">➕</a>
-  <a routerLink="/expenses/create" routerLinkActive="active">➖</a>
-  <a routerLink="/expenses" routerLinkActive="active">📋</a>
-  <a routerLink="/statement" routerLinkActive="active">📊</a>
-  <a routerLink="/calendar" routerLinkActive="active">📅</a>
-  <a routerLink="/dashboard" routerLinkActive="active">💹</a>
-  <a routerLink="/notifications" routerLinkActive="active">🔔</a>
-  <a routerLink="/" routerLinkActive="active">👤</a>
+
+  <a routerLink="/" routerLinkActive="active" class="nav-item">
+    <span class="icon">🏠</span>
+  </a>
+
+  <a routerLink="/blog/create" routerLinkActive="active" class="nav-item">
+    <span class="icon">➕</span>
+  </a>
+
+  <a routerLink="/expenses/create" routerLinkActive="active" class="nav-item">
+    <span class="icon">➖</span>
+  </a>
+
+  <a routerLink="/expenses" routerLinkActive="active" class="nav-item">
+    <span class="icon">📋</span>
+  </a>
+
+
+  <a routerLink="/calendar" routerLinkActive="active" class="nav-item">
+    <span class="icon">📅</span>
+  </a>
+
+
+  <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+    <span class="icon">💹</span>
+  </a>
+
+  <a routerLink="/statement" routerLinkActive="active" class="nav-item">
+    <span class="icon">📊</span>
+  </a>
+
+
+  <a routerLink="/notifications" routerLinkActive="active" class="nav-item">
+    <span class="icon">🔔</span>
+  </a>
+
 </nav>

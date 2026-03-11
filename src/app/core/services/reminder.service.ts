@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn:'root'
@@ -8,7 +9,7 @@ import { Observable } from 'rxjs'
 
 export class ReminderService {
 
-api="http://localhost:3000/api/reminders"
+api=environment.apiBaseUrl + "/reminders";
 
 constructor(private http:HttpClient){}
 

@@ -13,7 +13,7 @@ export class ExpenseListComponent {
 
   expenses: any[] = []
 
-  displayedColumns = ['date','title', 'amount', 'category',  'actions']
+  displayedColumns = ['sno', 'date', 'title', 'amount', 'category', 'actions']
 
   constructor(private expenseService: ExpenseService, private dialog: MatDialog) { }
 
@@ -26,6 +26,9 @@ export class ExpenseListComponent {
     this.expenseService.getExpenses(type)
       .subscribe(data => {
         this.expenses = data
+        this.expenses.forEach((e, index) => {
+          e.sno = index + 1
+        })
       })
 
   }

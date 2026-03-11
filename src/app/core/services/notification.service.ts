@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core'
 import { HttpClient } from '@angular/common/http'
 import { Observable } from 'rxjs'
+import { environment } from '../../../environment';
 
 @Injectable({
 providedIn:'root'
@@ -8,7 +9,7 @@ providedIn:'root'
 
 export class NotificationService{
 
-api="http://localhost:3000/api/notifications"
+api=environment.apiBaseUrl + "/notifications";
 
 constructor(private http:HttpClient){}
 

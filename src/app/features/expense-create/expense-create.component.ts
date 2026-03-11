@@ -16,8 +16,25 @@ export class ExpenseCreateComponent {
   location: any = {}
   locationPlaceholder: string = ""
   title: string = ""
+  titles: string[] = [
+    'Breakfast',
+    'Morning Snacks',
+    'Lunch',
+    'Evening Snacks',
+    'Dinner'
+  ];
 
+  filteredTitles: string[] = [...this.titles];
+
+  filterTitles() {
+    const value = this.expense.title?.toLowerCase() || '';
+    this.filteredTitles = this.titles.filter(option =>
+      option.toLowerCase().includes(value)
+    );
+  }
   ngOnInit() {
+    this.setData();
+    this.getLocation()
     if (this.data) {
 
       this.expense = { ...this.data }
@@ -26,8 +43,6 @@ export class ExpenseCreateComponent {
     } else {
       this.title = "Add"
     }
-    this.setData();
-    this.getLocation()
 
   }
 

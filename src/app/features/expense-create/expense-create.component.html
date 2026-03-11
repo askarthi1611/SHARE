@@ -4,7 +4,15 @@
 
     <mat-form-field appearance="outline" class="full-width">
         <mat-label>Title</mat-label>
-        <input matInput [(ngModel)]="expense.title">
+
+        <input matInput [(ngModel)]="expense.title" [matAutocomplete]="auto" (input)="filterTitles()" />
+
+        <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let option of filteredTitles" [value]="option">
+                {{ option }}
+            </mat-option>
+        </mat-autocomplete>
+
     </mat-form-field>
 
     <mat-form-field appearance="outline" class="full-width">

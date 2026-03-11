@@ -2,13 +2,14 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Blog } from '../../features/blog/blog.model';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BlogService {
 
-  private api = 'https://asks99.onrender.com/api/blogs';
+private api=environment.apiBaseUrl + "/blogs";
 
   constructor(private http: HttpClient) { }
 

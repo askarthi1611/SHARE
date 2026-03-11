@@ -58,6 +58,9 @@ import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { MatIconModule } from '@angular/material/icon'
 import { MatDialogModule } from '@angular/material/dialog';
+//matAutocomplete
+import { MatAutocompleteModule } from '@angular/material/autocomplete';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -97,6 +100,7 @@ import { MatDialogModule } from '@angular/material/dialog';
     MatButtonModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    MatAutocompleteModule,
     ServiceWorkerModule.register(
       'ngsw-worker.js',
       {

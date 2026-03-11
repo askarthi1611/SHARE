@@ -1,117 +1,159 @@
 import { Component, AfterViewInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import Chart from 'chart.js/auto';
+import { environment } from '../../../environment';
 
 @Component({
-selector: 'app-analytics',
-templateUrl: './analytics.component.html',
-styleUrls: ['./analytics.component.css']
+    selector: 'app-analytics',
+    templateUrl: './analytics.component.html',
+    styleUrls: ['./analytics.component.css']
 })
 
 export class AnalyticsComponent implements AfterViewInit {
 
-ngAfterViewInit(){
+    expenses: any[] = [];
 
-this.categoryChart()
-this.monthlyChart()
-this.pieChart()
-this.dailyChart()
+    constructor(private http: HttpClient) { }
+    private api = environment.apiBaseUrl + "/expenses";
 
-}
+    ngAfterViewInit() {
 
-categoryChart(){
+        this.http.get<any>(this.api)
+            .subscribe(res => {
 
-new Chart("categoryChart",{
+                this.expenses = res;
+                this.expenses.forEach((e, index) => {
+                    e.sno = index + 1;
+                    e.amount = +e.amount; // Ensure amount is a number
+                });
 
-type:'bar',
+                this.categoryChart();
+                this.monthlyChart();
+                this.pieChart();
+                this.dailyChart();
 
-data:{
-labels:['Food','Travel','Shopping','Medical','Entertainment'],
+            })
 
-datasets:[{
-label:'Expenses by Category',
-data:[2000,1500,1000,700,1200],
-backgroundColor:[
-'#4CAF50',
-'#2196F3',
-'#FF9800',
-'#F44336',
-'#9C27B0'
-]
-}]
+    }
 
-}
+    // CATEGORY CHART
+    categoryChart() {
 
-})
+        const categoryMap: any = {};
 
-}
+        this.expenses.forEach(exp => {
+            categoryMap[exp.category] = (categoryMap[exp.category] || 0) + exp.amount;
+        });
 
-monthlyChart(){
+        const labels = Object.keys(categoryMap);
+        const data = Object.values(categoryMap);
 
-new Chart("monthlyChart",{
+        new Chart("categoryChart", {
 
-type:'line',
+            type: 'bar',
 
-data:{
-labels:['Jan','Feb','Mar','Apr','May','Jun'],
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Expenses by Category',
+                    data: data
+                }]
+            }
 
-datasets:[{
-label:'Monthly Spending',
-data:[5000,4500,6200,7000,6500,7200],
-borderColor:'#3f51b5',
-fill:false
-}]
+        })
 
-}
+    }
 
-})
+    // MONTHLY CHART
+    monthlyChart() {
 
-}
+        const monthMap: any = {};
 
-pieChart(){
+        this.expenses.forEach(exp => {
 
-new Chart("pieChart",{
+            const month = new Date(exp.date).toLocaleString('default', { month: 'short' });
 
-type:'pie',
+            monthMap[month] = (monthMap[month] || 0) + exp.amount;
 
-data:{
-labels:['Food','Travel','Shopping','Medical','Others'],
+        })
 
-datasets:[{
-data:[2000,1500,1000,800,600],
-backgroundColor:[
-'#FF6384',
-'#36A2EB',
-'#FFCE56',
-'#4CAF50',
-'#9C27B0'
-]
-}]
+        const labels = Object.keys(monthMap);
+        const data = Object.values(monthMap);
 
-}
+        new Chart("monthlyChart", {
 
-})
+            type: 'line',
 
-}
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Monthly Spending',
+                    data: data,
+                    fill: false
+                }]
+            }
 
-dailyChart(){
+        })
 
-new Chart("dailyChart",{
+    }
 
-type:'bar',
+    // PIE CHART
+    pieChart() {
 
-data:{
-labels:['Mon','Tue','Wed','Thu','Fri','Sat','Sun'],
+        const categoryMap: any = {};
 
-datasets:[{
-label:'Daily Expenses',
-data:[300,500,200,600,700,800,400],
-backgroundColor:'#009688'
-}]
+        this.expenses.forEach(exp => {
+            categoryMap[exp.category] = (categoryMap[exp.category] || 0) + exp.amount;
+        });
 
-}
+        const labels = Object.keys(categoryMap);
+        const data = Object.values(categoryMap);
 
-})
+        new Chart("pieChart", {
 
-}
+            type: 'pie',
+
+            data: {
+                labels: labels,
+                datasets: [{
+                    data: data
+                }]
+            }
+
+        })
+
+    }
+
+    // DAILY CHART
+    dailyChart() {
+
+        const dayMap: any = {};
+
+        this.expenses.forEach(exp => {
+
+            const day = new Date(exp.date).toLocaleString('default', { weekday: 'short' });
+
+            dayMap[day] = (dayMap[day] || 0) + exp.amount;
+
+        })
+
+        const labels = Object.keys(dayMap);
+        const data = Object.values(dayMap);
+
+        new Chart("dailyChart", {
+
+            type: 'bar',
+
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Daily Expenses',
+                    data: data
+                }]
+            }
+
+        })
+
+    }
 
 }
