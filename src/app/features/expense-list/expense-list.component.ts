@@ -32,7 +32,27 @@ export class ExpenseListComponent {
       })
 
   }
+toggleDescription(id: string, check: any) {
 
+  const allDescElements = document.querySelectorAll('.desHover');
+  allDescElements.forEach((el: any) => {
+    el.style.display = 'none';
+  });
+
+  const allDesCheckboxElements = document.querySelectorAll('.desCheckbox');
+  allDesCheckboxElements.forEach((el: any) => {
+    if (el !== check) {
+      el.checked = false;
+    }
+  });
+
+  const descElement = document.querySelector(`.desHover[data-id="${id}"]`) as HTMLElement;
+
+  if (descElement) {
+    descElement.style.display = check.checked ? 'block' : 'none';
+  }
+
+}
   deleteExpense(id: string) {
 
     if (!confirm('Are you sure you want to delete this expense?')) {

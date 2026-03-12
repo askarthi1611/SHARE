@@ -20,6 +20,7 @@ exports.getExpenses = async (req, res) => {
     try {
 
         const expenses = await Expense.find()
+            .sort({ date: 1 })   // Ascending order by date
 
         res.json(expenses)
 

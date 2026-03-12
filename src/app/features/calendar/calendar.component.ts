@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { CalendarEvent, CalendarView } from 'angular-calendar';
 import { HttpClient } from '@angular/common/http';
+import { addDays, subDays, addWeeks, subWeeks, addMonths, subMonths } from 'date-fns';
+import { environment } from '../../../environment';
 
 @Component({
   selector: 'app-calendar',
@@ -64,7 +66,7 @@ export class CalendarComponent implements OnInit {
 
   loadEvents() {
 
-    this.http.get<any[]>('https://asks99.onrender.com/api/events')
+    this.http.get<any[]>(environment.apiBaseUrl + '/events')
       .subscribe(res => {
 
         const apiEvents = res.map(event => ({
@@ -85,14 +87,17 @@ export class CalendarComponent implements OnInit {
 
   loadExpenses() {
 
-    this.http.get<any[]>('https://asks99.onrender.com/api/expenses')
+    this.http.get<any[]>(environment.apiBaseUrl + '/expenses')
       .subscribe(res => {
 
         const grouped: any = {}
+        //date ascending
+        res.sort((a, b) => new Date(a.date).getDate() - new Date(b.date).getDate())
+
 
         res.forEach(expense => {
 
-          const date = expense.date
+          const date = new Date(expense.date).toDateString();
 
           if (!grouped[date]) {
             grouped[date] = {
@@ -101,10 +106,11 @@ export class CalendarComponent implements OnInit {
             }
           }
 
-          grouped[date].total += expense.amount*1
+          grouped[date].total += expense.amount * 1
           grouped[date].items.push(expense)
 
         })
+        console.log('grouped[date].items::', grouped);
 
         const expenseEvents: any[] = []
 
@@ -142,4 +148,41 @@ export class CalendarComponent implements OnInit {
       })
 
   }
+
+  previous() {
+
+    if (this.view === CalendarView.Month) {
+      this.viewDate = subMonths(this.viewDate, 1);
+    }
+
+    if (this.view === CalendarView.Week) {
+      this.viewDate = subWeeks(this.viewDate, 1);
+    }
+
+    if (this.view === CalendarView.Day) {
+      this.viewDate = subDays(this.viewDate, 1);
+    }
+
+  }
+
+  next() {
+
+    if (this.view === CalendarView.Month) {
+      this.viewDate = addMonths(this.viewDate, 1);
+    }
+
+    if (this.view === CalendarView.Week) {
+      this.viewDate = addWeeks(this.viewDate, 1);
+    }
+
+    if (this.view === CalendarView.Day) {
+      this.viewDate = addDays(this.viewDate, 1);
+    }
+
+  }
+
+  today() {
+    this.viewDate = new Date();
+  }
+
 }
