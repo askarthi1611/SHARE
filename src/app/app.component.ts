@@ -10,7 +10,7 @@ import { Subject } from 'rxjs';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit, OnDestroy {
-  title = 'SHARE';
+  title = 'Diary';
   deferredPrompt: any = null;
   showInstallBanner = false;  // ✅ Control banner visibility
   private destroy$ = new Subject<void>();
