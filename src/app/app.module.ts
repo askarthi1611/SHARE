@@ -62,6 +62,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatAutocompleteModule } from '@angular/material/autocomplete';
 import { EventCreateComponent } from './features/event-create/event-create.component';
 import { EventListComponent } from './features/event-list/event-list.component';
+import { FpsTrainerComponent } from './features/fps-trainer/fps-trainer.component';
 
 @NgModule({
   declarations: [
@@ -77,7 +78,8 @@ import { EventListComponent } from './features/event-list/event-list.component';
     NotificationsComponent,
     DashboardComponent,
     EventCreateComponent,
-    EventListComponent
+    EventListComponent,
+    FpsTrainerComponent
   ],
 
   imports: [

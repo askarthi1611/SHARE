@@ -1,0 +1,46 @@
+<div class="container" (click)="shootMiss()">
+
+  <h2>🎯 FPS Trainer</h2>
+
+  <div *ngIf="!gameRunning">
+    <h3 *ngIf="countdown > 0">Starting in {{countdown}}...</h3>
+
+    <!-- <select (change)="setDifficulty($event.target)">
+      <option value="easy">Easy</option>
+      <option value="medium" selected>Medium</option>
+      <option value="hard">Hard</option>
+    </select> -->
+
+    <button (click)="goFullscreen()">Fullscreen</button>
+  </div>
+
+  <div class="stats">
+    <span>Score: {{score}}</span>
+    <span>Accuracy: {{accuracy}}%</span>
+    <span>Time: {{timeLeft}}</span>
+  </div>
+
+  <div class="game-area" *ngIf="gameRunning">
+
+    <div *ngFor="let t of targets"
+         class="target"
+         [ngStyle]="{top: t.y + '%', left: t.x + '%'}"
+         (click)="hitTarget($event, t)">
+
+      <div class="headshot"
+           (click)="headshot($event, t)">
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- 🏆 LEADERBOARD -->
+  <div class="leaderboard">
+    <h3>Top Scores</h3>
+    <div *ngFor="let l of leaderboard">
+      {{l.score}} pts - {{l.accuracy}}%
+    </div>
+  </div>
+
+</div>

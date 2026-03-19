@@ -118,22 +118,25 @@ export class CalendarComponent implements OnInit {
 
           const dayData = grouped[date]
 
+          let listring: any = [];
           dayData.items.forEach((expense: any) => {
 
             const color = this.categoryColors[expense.category] || this.categoryColors['Other']
-
+            listring.push({ name: expense.category, amount: expense.amount });
             expenseEvents.push({
               start: new Date(date),
-              title: `${expense.category}: ₹${expense.amount}`,
+              title: `${expense.category}: ₹${expense.amount} \n`,
               color: color,
               meta: expense
             })
 
           })
-
+console.log('listring::' , listring);
+listring.push({ name: 'Total', amount: dayData.total });
+listring = listring.map((item: any) => `<li><div>${item.name} </div> <div>: ₹${item.amount}</div></li>`).join('');
           expenseEvents.push({
             start: new Date(date),
-            title: `🧾 Total: ₹${dayData.total}`,
+            title: `<ul class="list-group">${listring}</ul>`,
             allDay: true,
             color: {
               primary: '#2c3e50',

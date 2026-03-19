@@ -1,11 +1,14 @@
-.desHover{
+.desHover {
     display: none;
     position: absolute;
     background-color: #f9f9f9;
     border: 1px solid #ccc;
     padding: 10px;
     z-index: 1000;
+    left: 50px;
+    width: 360px;
 }
+
 label {
     cursor: pointer;
 }

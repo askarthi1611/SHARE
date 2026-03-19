@@ -3,6 +3,8 @@ import { isPlatformBrowser } from '@angular/common';
 import { Router, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
+import { environment } from '../environment';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-root',
@@ -17,14 +19,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router
+    private router: Router,private http: HttpClient
   ) { }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
+      this.callCheckApi();
       this.initPWA();
-      this.removeSplashScreen();
-      this.initNotifications();
+      // this.initNotifications();
       setInterval(() => {
         // this.sendTestNotification();
       }, 600000); // every 10 minutes
@@ -35,6 +37,25 @@ export class AppComponent implements OnInit, OnDestroy {
     this.destroy$.next();
     this.destroy$.complete();
   }
+
+  
+
+callCheckApi() {
+  this.http.get(`${environment.apiBaseUrl}/check`)
+    .subscribe({
+      next: (data: any) => {
+        console.log('response::', data);
+
+        if (data.status === 'success') {
+          // this.removeSplashScreen();
+        }
+      },
+      error: (err) => {
+        console.error('API Check Error:', err);
+        this.removeSplashScreen(); // avoid stuck splash
+      }
+    });
+}
 
   /** ✅ FIXED PWA Install Logic */
   private initPWA() {

@@ -1,21 +1,53 @@
-.calendar-header{
-display:flex;
-gap:10px;
-margin-bottom:15px;
+.calendar-header {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
 }
 
-.calendar-header button{
-background:#2196F3;
-border:none;
-color:white;
-padding:8px 15px;
-border-radius:6px;
-cursor:pointer;
+.calendar-header button {
+    background: #2196F3;
+    border: none;
+    color: white;
+    padding: 8px 15px;
+    border-radius: 6px;
+    cursor: pointer;
 }
 
-.glass-card{
-background:white;
-padding:20px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+.glass-card {
+    background: white;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+::ng-deep .list-group {
+    list-style: none !important;
+    padding: 0 !important;
+    margin: 0 !important;
+}
+
+::ng-deep .list-group li {
+    display: flex;
+    justify-content: space-between;
+    padding: 5px 0;
+    border-bottom: 1px solid #eee;
+}
+
+#list-group li:last-child {
+    border-bottom: none;
+}
+
+#list-group li div:first-child {
+    font-weight: bold;
+}
+
+#list-group li div:last-child {
+    color: #555;
+    width: 150px;
+    text-align: right;
+}
+
+#list-group li:last-child div:first-child {
+    font-weight: bold;
+    color: #000;
 }
