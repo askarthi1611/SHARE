@@ -47,7 +47,7 @@ callCheckApi() {
         console.log('response::', data);
 
         if (data.status === 'success') {
-          // this.removeSplashScreen();
+          this.removeSplashScreen();
         }
       },
       error: (err) => {
