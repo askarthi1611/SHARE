@@ -1,53 +1,197 @@
-.event-list-container{
-max-width:800px;
-margin:auto;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║              EVENT LIST COMPONENT STYLES               ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+:host {
+  display: block;
 }
 
-.event-card{
-background:#fff;
-padding:15px;
-margin-bottom:15px;
-border-radius:8px;
-display:flex;
-justify-content:space-between;
-align-items:center;
-box-shadow:0 3px 10px rgba(0,0,0,0.1);
+.event-list-container {
+  max-width: 900px;
+  margin: 0 auto;
+  animation: slideInUp var(--transition-base);
 }
 
-.event-info h3{
-margin:0;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                EVENT CARD                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.event-card {
+  background: var(--color-surface);
+  padding: var(--spacing-lg);
+  margin-bottom: var(--spacing-lg);
+  border-radius: var(--radius-lg);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: var(--spacing-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-base);
 }
 
-.event-info p{
-margin:4px 0;
-font-size:14px;
+.event-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-2px);
 }
 
-.tag{
-background:#eee;
-padding:3px 10px;
-border-radius:15px;
-font-size:12px;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                EVENT INFO                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.event-info {
+  flex: 1;
+  min-width: 200px;
 }
 
-.actions{
-display:flex;
-gap:10px;
+.event-info h3 {
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--color-text-primary);
+  font-size: clamp(1rem, 2vw, 1.25rem);
 }
 
-button{
-border:none;
-padding:8px 12px;
-border-radius:5px;
-cursor:pointer;
+.event-info p {
+  margin: var(--spacing-sm) 0;
+  font-size: 0.95rem;
+  color: var(--color-text-secondary);
 }
 
-.edit-btn{
-background:#4CAF50;
-color:#fff;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                  TAGS                                  ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.tag {
+  background: var(--color-background);
+  color: var(--color-text-secondary);
+  padding: var(--spacing-sm) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  border: 1px solid var(--color-border);
 }
 
-.delete-btn{
-background:#f44336;
-color:#fff;
+.tag.upcoming {
+  background: rgba(25, 118, 210, 0.1);
+  color: var(--color-primary);
+  border-color: var(--color-primary);
+}
+
+.tag.today {
+  background: rgba(255, 107, 107, 0.1);
+  color: var(--color-accent);
+  border-color: var(--color-accent);
+}
+
+.tag.past {
+  background: rgba(102, 102, 102, 0.1);
+  color: #666;
+  border-color: #ccc;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                ACTIONS                                 ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.actions {
+  display: flex;
+  gap: var(--spacing-md);
+  flex-wrap: wrap;
+}
+
+button {
+  border: none;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.9rem;
+  transition: all var(--transition-fast);
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.edit-btn {
+  background: linear-gradient(135deg, #4CAF50, #66BB6A);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.edit-btn:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+.delete-btn {
+  background: linear-gradient(135deg, var(--color-accent), #ff8888);
+  color: white;
+  box-shadow: var(--shadow-sm);
+}
+
+.delete-btn:hover {
+  box-shadow: var(--shadow-md);
+  transform: translateY(-2px);
+}
+
+button:active {
+  transform: translateY(0);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║            RESPONSIVE DESIGN                           ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+@media (max-width: 768px) {
+  .event-card {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: var(--spacing-md);
+  }
+
+  .event-info {
+    width: 100%;
+  }
+
+  .actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  button {
+    flex: 1;
+    min-width: 100px;
+  }
+}
+
+@media (max-width: 480px) {
+  .event-list-container {
+    padding: 0 var(--spacing-sm);
+  }
+
+  .event-card {
+    padding: var(--spacing-md);
+    margin-bottom: var(--spacing-md);
+  }
+
+  .event-info h3 {
+    font-size: 1rem;
+  }
+
+  .event-info p {
+    font-size: 0.85rem;
+  }
+
+  .tag {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .actions {
+    gap: var(--spacing-sm);
+  }
+
+  button {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.8rem;
+  }
 }

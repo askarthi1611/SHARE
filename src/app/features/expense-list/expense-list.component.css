@@ -1,14 +1,110 @@
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║             EXPENSE LIST COMPONENT STYLES              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+:host {
+  display: block;
+}
+
 .desHover {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    padding: 10px;
-    z-index: 1000;
-    left: 50px;
-    width: 360px;
+  display: none;
+  position: absolute;
+  background-color: var(--color-surface);
+  border: 2px solid var(--color-border);
+  padding: var(--spacing-lg);
+  z-index: 1000;
+  left: 50px;
+  width: 360px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  animation: slideInDown var(--transition-base);
 }
 
 label {
-    cursor: pointer;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--color-text-primary);
+  transition: color var(--transition-fast);
+}
+
+label:hover {
+  color: var(--color-primary);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                TABLE WRAPPER                           ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.table-wrapper {
+  width: 100%;
+  background: var(--color-surface);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
+  animation: slideInUp var(--transition-base);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                MATERIAL TABLE                          ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+::ng-deep .mat-mdc-table {
+  background: var(--color-surface) !important;
+}
+
+::ng-deep .mat-mdc-header-cell {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+  color: white !important;
+  font-weight: 700;
+  padding: var(--spacing-lg) !important;
+}
+
+::ng-deep .mat-mdc-cell {
+  color: var(--color-text-primary) !important;
+  padding: var(--spacing-lg) !important;
+  border-bottom: 1px solid var(--color-border) !important;
+}
+
+::ng-deep .mat-mdc-row:hover {
+  background: var(--color-background) !important;
+  transition: background var(--transition-fast);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║            RESPONSIVE DESIGN                           ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+@media (max-width: 768px) {
+  .table-wrapper {
+    border-radius: var(--radius-md);
+  }
+
+  .desHover {
+    left: 0;
+    width: 100%;
+    margin-top: var(--spacing-md);
+  }
+
+  ::ng-deep .mat-mdc-header-cell {
+    padding: var(--spacing-md) !important;
+    font-size: 0.85rem !important;
+  }
+
+  ::ng-deep .mat-mdc-cell {
+    padding: var(--spacing-md) !important;
+    font-size: 0.9rem !important;
+  }
+}
+
+@media (max-width: 480px) {
+  ::ng-deep .mat-mdc-header-cell {
+    padding: var(--spacing-sm) !important;
+    font-size: 0.75rem !important;
+  }
+
+  ::ng-deep .mat-mdc-cell {
+    padding: var(--spacing-sm) !important;
+    font-size: 0.8rem !important;
+  }
 }

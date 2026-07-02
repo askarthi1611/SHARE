@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 interface Target {
   x: number;
@@ -12,7 +13,7 @@ import { environment } from '../../../environment';
   templateUrl: './fps-trainer.component.html',
   styleUrls: ['./fps-trainer.component.css']
 })
-export class FpsTrainerComponent implements OnInit {
+export class FpsTrainerComponent implements OnInit, OnDestroy {
 
   score = 0;
   shots = 0;
@@ -35,22 +36,29 @@ export class FpsTrainerComponent implements OnInit {
 
   countdown = 3;
 
-  // audio = new Audio('../../../gunshot.mp3');
+  audio!: HTMLAudioElement;
 
-
-audio!: HTMLAudioElement;
+  constructor(@Inject(PLATFORM_ID) private platformId: Object) {}
 
 ngOnInit() {
-  this.audio = new Audio();
-  this.audio.src = '../../../gunshot.mp3';
-  this.audio.load();
+  if (isPlatformBrowser(this.platformId)) {
+    this.audio = new Audio();
+    this.audio.src = '../../../gunshot.mp3';
+    this.audio.load();
+    this.loadLeaderboard();
+    this.autoStart();
+  }
+}
 
-  this.loadLeaderboard();
-  this.autoStart();
+ngOnDestroy() {
+  if (this.interval) clearInterval(this.interval);
+  if (this.moveInterval) clearInterval(this.moveInterval);
 }
 
   // ⏱️ AUTO START AFTER 3 SEC
   autoStart() {
+    if (!isPlatformBrowser(this.platformId)) return; // Only run in browser
+    
     const timer = setInterval(() => {
       this.countdown--;
       if (this.countdown === 0) {
@@ -104,7 +112,11 @@ ngOnInit() {
 
     this.saveScore();
 
-    alert(`Score: ${this.score} | Accuracy: ${this.accuracy}%`);
+    if (isPlatformBrowser(this.platformId)) {
+      alert(`Score: ${this.score} | Accuracy: ${this.accuracy}%`);
+    } else {
+      console.log(`Game ended - Score: ${this.score} | Accuracy: ${this.accuracy}%`);
+    }
   }
 
   spawnTargets() {
@@ -135,8 +147,10 @@ ngOnInit() {
   hitTarget(event: MouseEvent, target: Target) {
     event.stopPropagation();
 
-    this.audio.currentTime = 0;
-    this.audio.play();
+    if (isPlatformBrowser(this.platformId) && this.audio) {
+      this.audio.currentTime = 0;
+      this.audio.play().catch(() => {}); // ignore playback errors
+    }
 
     this.shots++;
     this.hits++;
@@ -150,8 +164,10 @@ ngOnInit() {
   headshot(event: MouseEvent, target: Target) {
     event.stopPropagation();
 
-    this.audio.currentTime = 0;
-    this.audio.play();
+    if (isPlatformBrowser(this.platformId) && this.audio) {
+      this.audio.currentTime = 0;
+      this.audio.play().catch(() => {}); // ignore playback errors
+    }
 
     this.shots++;
     this.hits++;
@@ -167,6 +183,8 @@ ngOnInit() {
 
   // 🏆 LEADERBOARD
   saveScore() {
+    if (typeof localStorage === 'undefined') return; // SSR guard
+    
     const data = JSON.parse(localStorage.getItem('fpsScores') || '[]');
 
     data.push({
@@ -182,11 +200,14 @@ ngOnInit() {
   }
 
   loadLeaderboard() {
+    if (typeof localStorage === 'undefined') return; // SSR guard
     this.leaderboard = JSON.parse(localStorage.getItem('fpsScores') || '[]');
   }
 
   // 🖥️ FULLSCREEN
   goFullscreen() {
-    document.documentElement.requestFullscreen();
+    if (isPlatformBrowser(this.platformId)) {
+      document.documentElement.requestFullscreen().catch(() => {});
+    }
   }
 }

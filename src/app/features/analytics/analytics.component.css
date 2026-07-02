@@ -1,39 +1,177 @@
-.analytics-container{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(350px,1fr));
-gap:20px;
-padding:30px;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║             ANALYTICS COMPONENT STYLES                 ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+:host {
+  display: block;
 }
 
-.chart-card{
-padding:20px;
-border-radius:16px;
-box-shadow:0 10px 30px rgba(0,0,0,0.15);
-background:white;
-transition:0.3s;
+.analytics-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: var(--spacing-xl);
+  padding: var(--spacing-xl);
+  animation: slideInUp var(--transition-base);
 }
 
-.chart-card:hover{
-transform:translateY(-5px);
-box-shadow:0 15px 35px rgba(0,0,0,0.2);
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                CHART CARD                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.chart-card {
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  transition: all var(--transition-base);
+  min-height: 400px;
+  display: flex;
+  flex-direction: column;
 }
 
-canvas{
-max-height:300px;
+.chart-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-lg);
+}
+
+.chart-card-header {
+  margin-bottom: var(--spacing-lg);
+}
+
+.chart-card-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--color-text-primary);
+  margin: 0;
+}
+
+.chart-card-subtitle {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  margin: var(--spacing-sm) 0 0 0;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                CANVAS                                  ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+canvas {
+  max-height: 300px;
+  flex: 1;
+}
+
+::ng-deep canvas {
+  background: var(--color-surface) !important;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                STATISTICS                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-lg);
+  margin-top: var(--spacing-lg);
+}
+
+.stat-item {
+  background: var(--color-background);
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  text-align: center;
+  border: 1px solid var(--color-border);
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: var(--color-text-secondary);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: var(--spacing-sm);
+}
+
+.stat-value {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-primary);
 }
 
 .grid {
-
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
-
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: var(--spacing-xl);
 }
 
-@media(max-width:900px) {
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║            RESPONSIVE DESIGN                           ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
 
-    .grid {
-        grid-template-columns: 1fr;
-    }
+@media (max-width: 900px) {
+  .analytics-container {
+    grid-template-columns: 1fr;
+    padding: var(--spacing-lg);
+  }
 
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .chart-card {
+    min-height: 350px;
+  }
+}
+
+@media (max-width: 768px) {
+  .analytics-container {
+    gap: var(--spacing-lg);
+    padding: var(--spacing-lg);
+  }
+
+  .chart-card {
+    padding: var(--spacing-lg);
+  }
+
+  .chart-card-title {
+    font-size: 1rem;
+  }
+
+  canvas {
+    max-height: 250px;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .analytics-container {
+    padding: var(--spacing-md);
+    gap: var(--spacing-md);
+  }
+
+  .chart-card {
+    padding: var(--spacing-md);
+    min-height: 300px;
+  }
+
+  .chart-card-title {
+    font-size: 0.95rem;
+  }
+
+  canvas {
+    max-height: 200px;
+  }
+
+  .stats {
+    grid-template-columns: 1fr;
+    gap: var(--spacing-md);
+  }
+
+  .stat-value {
+    font-size: 1.25rem;
+  }
 }

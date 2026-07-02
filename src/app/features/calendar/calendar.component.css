@@ -1,53 +1,166 @@
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║               CALENDAR COMPONENT STYLES                ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+:host {
+  display: block;
+}
+
 .calendar-header {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 15px;
+  display: flex;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-xl);
+  flex-wrap: wrap;
 }
 
 .calendar-header button {
-    background: #2196F3;
-    border: none;
-    color: white;
-    padding: 8px 15px;
-    border-radius: 6px;
-    cursor: pointer;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  border: none;
+  color: white;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 0.95rem;
+  transition: all var(--transition-fast);
+  box-shadow: var(--shadow-sm);
 }
+
+.calendar-header button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.calendar-header button:active {
+  transform: translateY(0);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                GLASS CARD                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
 
 .glass-card {
-    background: white;
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  background: var(--color-surface);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  overflow: hidden;
 }
 
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                 CALENDAR STYLING                       ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+::ng-deep .cal-month-view {
+  background: var(--color-surface) !important;
+}
+
+::ng-deep .cal-day-cell {
+  color: var(--color-text-primary) !important;
+  border-color: var(--color-border) !important;
+}
+
+::ng-deep .cal-day-cell:hover {
+  background-color: var(--color-background) !important;
+}
+
+::ng-deep .cal-today {
+  background-color: var(--color-primary) !important;
+  color: white !important;
+}
+
+::ng-deep .cal-selected {
+  background-color: var(--color-secondary) !important;
+  color: white !important;
+}
+
+::ng-deep .cal-header {
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary)) !important;
+  color: white !important;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                EVENT LIST                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
 ::ng-deep .list-group {
-    list-style: none !important;
-    padding: 0 !important;
-    margin: 0 !important;
+  list-style: none !important;
+  padding: 0 !important;
+  margin: 0 !important;
 }
 
 ::ng-deep .list-group li {
-    display: flex;
-    justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--color-border);
+  transition: all var(--transition-fast);
 }
 
-#list-group li:last-child {
-    border-bottom: none;
+::ng-deep .list-group li:hover {
+  background: var(--color-background);
 }
 
-#list-group li div:first-child {
-    font-weight: bold;
+::ng-deep .list-group li:last-child {
+  border-bottom: none;
 }
 
-#list-group li div:last-child {
-    color: #555;
-    width: 150px;
+::ng-deep .list-group li div:first-child {
+  font-weight: 600;
+  color: var(--color-text-primary);
+}
+
+::ng-deep .list-group li div:last-child {
+  color: var(--color-text-secondary);
+  font-size: 0.9rem;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║              RESPONSIVE DESIGN                         ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+@media (max-width: 768px) {
+  .calendar-header {
+    gap: var(--spacing-sm);
+  }
+
+  .calendar-header button {
+    flex: 1;
+    min-width: 100px;
+    padding: var(--spacing-md) var(--spacing-sm);
+    font-size: 0.85rem;
+  }
+
+  .glass-card {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .calendar-header {
+    flex-direction: column;
+  }
+
+  .calendar-header button {
+    width: 100%;
+  }
+
+  .glass-card {
+    padding: var(--spacing-md);
+  }
+
+  ::ng-deep .list-group li {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+
+  ::ng-deep .list-group li div:last-child {
+    width: 100%;
     text-align: right;
+  }
 }
-
-#list-group li:last-child div:first-child {
-    font-weight: bold;
-    color: #000;
-}
+/* End of responsive rules */

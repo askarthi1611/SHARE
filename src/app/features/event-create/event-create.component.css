@@ -1,57 +1,192 @@
-.event-container{
-max-width:600px;
-margin:auto;
-background:#fff;
-padding:25px;
-border-radius:10px;
-box-shadow:0 5px 15px rgba(0,0,0,0.1);
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║               EVENT CREATE FORM STYLES                 ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.event-container {
+  max-width: 600px;
+  margin: 0 auto;
+  background: var(--color-surface);
+  padding: var(--spacing-xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  border: 1px solid var(--color-border);
+  animation: slideInUp var(--transition-base);
 }
 
-h2{
-text-align:center;
-margin-bottom:20px;
+h2 {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+  color: var(--color-text-primary);
+  font-size: clamp(1.25rem, 4vw, 1.75rem);
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
-.form-group{
-display:flex;
-flex-direction:column;
-margin-bottom:15px;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                FORM GROUPS                             ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: var(--spacing-lg);
+  gap: var(--spacing-sm);
 }
 
-.row{
-display:flex;
-gap:15px;
+.form-group label {
+  font-weight: 600;
+  color: var(--color-text-primary);
+  font-size: 0.95rem;
 }
 
-input,textarea,select{
-padding:10px;
-border:1px solid #ccc;
-border-radius:6px;
-font-size:14px;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                FORM INPUTS                             ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+input, textarea, select {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border: 2px solid var(--color-border);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-family: inherit;
+  color: var(--color-text-primary);
+  background: var(--color-surface);
+  transition: all var(--transition-fast);
 }
 
-textarea{
-resize:none;
-height:80px;
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 3px rgba(25, 118, 210, 0.1);
 }
 
-.checkbox{
-flex-direction:row;
-align-items:center;
-gap:10px;
+textarea {
+  resize: vertical;
+  min-height: 100px;
 }
 
-.create-btn{
-width:100%;
-background:#2196F3;
-color:#fff;
-border:none;
-padding:12px;
-border-radius:6px;
-cursor:pointer;
-font-size:16px;
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                ROW LAYOUT                              ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.row {
+  display: flex;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
 }
 
+.row .form-group {
+  flex: 1;
+  min-width: 200px;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                CHECKBOX                                ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.checkbox {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-lg);
+}
+
+.checkbox input[type="checkbox"] {
+  width: 20px;
+  height: 20px;
+  cursor: pointer;
+  accent-color: var(--color-primary);
+}
+
+.checkbox label {
+  margin: 0;
+  cursor: pointer;
+  font-weight: 500;
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║                BUTTONS                                 ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+.create-btn {
+  width: 100%;
+  background: linear-gradient(135deg, var(--color-primary), var(--color-secondary));
+  color: white;
+  border: none;
+  padding: var(--spacing-lg) var(--spacing-xl);
+  border-radius: var(--radius-md);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-top: var(--spacing-xl);
+  box-shadow: var(--shadow-md);
+}
+
+.create-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+.create-btn:active {
+  transform: translateY(0);
+}
+
+/* ╔════════════════════════════════════════════════════════╗ */
+/* ║            RESPONSIVE DESIGN                           ║ */
+/* ╚════════════════════════════════════════════════════════╝ */
+
+@media (max-width: 768px) {
+  .event-container {
+    padding: var(--spacing-lg);
+    border-radius: var(--radius-md);
+  }
+
+  h2 {
+    font-size: 1.25rem;
+    margin-bottom: var(--spacing-lg);
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .row .form-group {
+    min-width: 100%;
+  }
+
+  .form-group {
+    margin-bottom: var(--spacing-md);
+  }
+}
+
+@media (max-width: 480px) {
+  .event-container {
+    padding: var(--spacing-md);
+    margin: 0 var(--spacing-sm);
+  }
+
+  h2 {
+    font-size: 1.1rem;
+    margin-bottom: var(--spacing-md);
+  }
+
+  input, textarea, select {
+    padding: var(--spacing-md);
+    font-size: 16px; /* Prevents zoom on iOS */
+  }
+
+  .create-btn {
+    padding: var(--spacing-md) var(--spacing-lg);
+    font-size: 0.9rem;
+  }
+}
 .create-btn:hover{
 background:#0b7dda;
 }
+/* cleaned stray declarations */

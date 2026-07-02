@@ -5,6 +5,7 @@ import { filter } from 'rxjs/operators';
 import { Subject } from 'rxjs';
 import { environment } from '../environment';
 import { HttpClient } from '@angular/common/http';
+import { ThemeService } from './core/services/theme.service';
 
 @Component({
   selector: 'app-root',
@@ -14,13 +15,20 @@ import { HttpClient } from '@angular/common/http';
 export class AppComponent implements OnInit, OnDestroy {
   title = 'Diary';
   deferredPrompt: any = null;
-  showInstallBanner = false;  // ✅ Control banner visibility
+  showInstallBanner = false;
+  showThemeMenu = false;
+  currentTheme = 'light';
+  availableThemes: string[] = [];
   private destroy$ = new Subject<void>();
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object,
-    private router: Router,private http: HttpClient
-  ) { }
+    private router: Router,
+    private http: HttpClient,
+    public themeService: ThemeService
+  ) {
+    this.availableThemes = this.themeService.getAllThemes();
+  }
 
   ngOnInit() {
     if (isPlatformBrowser(this.platformId)) {
@@ -200,6 +208,24 @@ callCheckApi() {
       }, 5000); // show after 5 seconds
 
     }
+  }
+
+  // ═══════════════════════════════════════════════════════════
+  // THEME SWITCHING METHODS
+  // ═══════════════════════════════════════════════════════════
+
+  toggleThemeMenu(): void {
+    this.showThemeMenu = !this.showThemeMenu;
+  }
+
+  switchTheme(themeName: string): void {
+    this.themeService.setTheme(themeName);
+    this.currentTheme = themeName;
+    this.showThemeMenu = false;
+  }
+
+  closeThemeMenu(): void {
+    this.showThemeMenu = false;
   }
 
 }

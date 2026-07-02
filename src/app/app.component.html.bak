@@ -20,39 +20,42 @@
         <span class="icon">🏠</span>
       </a>
 
-      <!-- Add Expense -->
-      <a routerLink="/expenses/create" routerLinkActive="active" class="nav-item" title="Add Expense">
-        <span class="icon">➕</span>
-      </a>
-
-      <!-- Calendar -->
-      <a routerLink="/calendar" routerLinkActive="active" class="nav-item" title="Calendar">
-        <span class="icon">📅</span>
-      </a>
-
-      <!-- Blog View -->
-      <a routerLink="/" routerLinkActive="active" class="nav-item" title="Blog">
-        <span class="icon">📖</span>
-      </a>
-
-      <!-- Dashboard -->
-      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item" title="Dashboard">
-        <span class="icon">📊</span>
-      </a>
-
-      <!-- Statement -->
-      <a routerLink="/statement" routerLinkActive="active" class="nav-item" title="Statement">
-        <span class="icon">📈</span>
-      </a>
-
-      <!-- Expense List -->
-      <a routerLink="/expenses" routerLinkActive="active" class="nav-item" title="Expense List">
+      <!-- Expenses Dropdown -->
+      <div class="nav-item dropdown">
         <span class="icon">💰</span>
-      </a>
+        <div class="dropdown-menu">
+          <a routerLink="/expenses/create">➕ Add Expense</a>
+          <a routerLink="/expenses">📋 Expense List</a>
+          <a routerLink="/statement">📊 Statement</a>
+        </div>
+      </div>
+
+      <!-- Events Dropdown -->
+      <div class="nav-item dropdown">
+        <span class="icon">📅</span>
+        <div class="dropdown-menu">
+          <a routerLink="/events/create">➕ Add Event</a>
+          <a routerLink="/events">📋 Event List</a>
+        </div>
+      </div>
+
+      <!-- Analytics Dropdown -->
+      <div class="nav-item dropdown">
+        <span class="icon">📊</span>
+        <div class="dropdown-menu">
+          <a routerLink="/calendar">Calendar</a>
+          <a routerLink="/dashboard">Dashboard</a>
+        </div>
+      </div>
 
       <!-- Notifications -->
       <a routerLink="/notifications" routerLinkActive="active" class="nav-item" title="Notifications">
         <span class="icon">🔔</span>
+      </a>
+
+      <!-- Blog -->
+      <a routerLink="/blog/create" routerLinkActive="active" class="nav-item" title="Create Blog">
+        <span class="icon">✏️</span>
       </a>
     </div>
 
@@ -81,6 +84,9 @@
   </div>
 </nav>
 
+<!-- ═══════════════════════════════════════════════════════════ -->
+<!-- MAIN CONTENT -->
+<!-- ═══════════════════════════════════════════════════════════ -->
 <main class="app-main">
   <router-outlet></router-outlet>
 </main>
@@ -89,46 +95,27 @@
 <!-- MOBILE NAVIGATION (Bottom) -->
 <!-- ═══════════════════════════════════════════════════════════ -->
 <nav class="bottom-nav hide-desktop">
-
   <a routerLink="/" routerLinkActive="active" class="nav-item" title="Home">
     <span class="icon">🏠</span>
+  </a>
+
+  <a routerLink="/blog/create" routerLinkActive="active" class="nav-item" title="Create Blog">
+    <span class="icon">✏️</span>
   </a>
 
   <a routerLink="/expenses/create" routerLinkActive="active" class="nav-item" title="Add Expense">
     <span class="icon">➕</span>
   </a>
 
-  <a routerLink="/calendar" routerLinkActive="active" class="nav-item" title="Calendar">
-    <span class="icon">📅</span>
+  <a routerLink="/expenses" routerLinkActive="active" class="nav-item" title="Expenses">
+    <span class="icon">📋</span>
   </a>
 
-  <a routerLink="/" routerLinkActive="active" class="nav-item" title="Blog">
-    <span class="icon">📖</span>
+  <a routerLink="/calendar" routerLinkActive="active" class="nav-item" title="Calendar">
+    <span class="icon">📅</span>
   </a>
 
   <a routerLink="/dashboard" routerLinkActive="active" class="nav-item" title="Dashboard">
     <span class="icon">📊</span>
   </a>
-
-  <a routerLink="/statement" routerLinkActive="active" class="nav-item" title="Statement">
-    <span class="icon">📈</span>
-  </a>
-
-  <a routerLink="/expenses" routerLinkActive="active" class="nav-item" title="Expense List">
-    <span class="icon">💰</span>
-  </a>
-
-  <!-- Theme Switcher for Mobile -->
-  <div class="nav-item dropdown mobile-theme">
-    <span class="icon" (click)="toggleThemeMenu()">🎨</span>
-    <div class="dropdown-menu mobile" *ngIf="showThemeMenu">
-      <button *ngFor="let theme of availableThemes" 
-        (click)="switchTheme(theme); $event.stopPropagation()"
-        [class.active]="currentTheme === theme"
-        class="theme-option">
-        {{ theme | titlecase }}
-      </button>
-    </div>
-  </div>
-
 </nav>
